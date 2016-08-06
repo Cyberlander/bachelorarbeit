@@ -13,6 +13,8 @@ public class Preferences
     private static Preferences INSTANCE;
     private static Context mContext;
     public static final String keyStartStation = "keyStartStation";
+    public static final String keyStatusStateMachine = "keyStatusStateMachine";
+
 
 
     public Preferences(Context context)
@@ -22,7 +24,7 @@ public class Preferences
     }
 
 
-    //EvolutionCalculator
+    //Startstation
     public static void saveStartStation(String startstation)
     {
         saveSharedSetting(mContext, keyStartStation, startstation);
@@ -35,6 +37,16 @@ public class Preferences
 
 
 
+    //Status des Automaten
+    public static void saveStatusStateMachine(int status)
+    {
+        saveSharedSettingInteger(mContext, keyStatusStateMachine, status);
+    }
+
+    public static int getStatusStateMachine()
+    {
+        return readSharedSettingInteger(mContext, keyStatusStateMachine);
+    }
 
 
 
@@ -47,6 +59,8 @@ public class Preferences
 
 
 
+
+    //Shared Preferences Operationen für Strings
     private static void saveSharedSetting(Context context, String settingName, String settingValue)
     {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -61,5 +75,23 @@ public class Preferences
     {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
         return sharedPref.getString(settingName, "");
+    }
+
+
+    //Shared Preferences Operationen für Integer
+    private static void saveSharedSettingInteger(Context context, String settingName, int settingValue)
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(settingName, settingValue);
+        editor.apply();
+    }
+
+
+
+    private static int readSharedSettingInteger(Context context, String settingName)
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sharedPref.getInt(settingName, 0);
     }
 }
