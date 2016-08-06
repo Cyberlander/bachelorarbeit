@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.R;
+import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 
@@ -39,7 +40,10 @@ public class FragmentOverview extends Fragment
         stationDataSource.open();
         ArrayList<Station> l = stationDataSource.getAllStations();
         Station station1 = l.get(0);
+
+        Preferences.saveStartStation("blub");
         //Toast.makeText(getContext(), "" + station1.getStationName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "" + Preferences.getStartStation(), Toast.LENGTH_SHORT).show();
 
         return view;
     }
