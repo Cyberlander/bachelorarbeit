@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentOverview(), "ONE");
-        adapter.addFragment(new FragmentOverview(), "TWO");
+        adapter.addFragment(new FragmentOverview(), "Übersicht");
+        adapter.addFragment(new FragmentOverview(), "Teilstrecken");
         viewPager.setAdapter(adapter);
     }
 

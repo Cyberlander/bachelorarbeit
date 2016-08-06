@@ -8,11 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.R;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
+import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
+
+import java.util.ArrayList;
 
 public class FragmentOverview extends Fragment
 {
+    StationDataSource stationDataSource;
+
     public FragmentOverview() {
         // Required empty public constructor
     }
@@ -26,7 +33,15 @@ public class FragmentOverview extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_overview, container, false);
+        View view = inflater.inflate(R.layout.fragment_overview, container, false);
+
+        stationDataSource = new StationDataSource(getContext());
+        stationDataSource.open();
+        ArrayList<Station> l = stationDataSource.getAllStations();
+        Station station1 = l.get(0);
+        //Toast.makeText(getContext(), "" + station1.getStationName(), Toast.LENGTH_SHORT).show();
+
+        return view;
     }
 
 }
