@@ -41,9 +41,11 @@ public class FragmentOverview extends Fragment
         ArrayList<Station> l = stationDataSource.getAllStations();
         Station station1 = l.get(0);
 
-        Preferences.saveStatusStateMachine(2);
+        Preferences.saveBooleanDetailedViewTextfieldStartstation(true);
+
+
         //Toast.makeText(getContext(), "" + station1.getStationName(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "" + Preferences.getStatusStateMachine(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "" + Preferences.getBooleanDetailedViewTextfieldStartstation(), Toast.LENGTH_SHORT).show();
 
         return view;
     }

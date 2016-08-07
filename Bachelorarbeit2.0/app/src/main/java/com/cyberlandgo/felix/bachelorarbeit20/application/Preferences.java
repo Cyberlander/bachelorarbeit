@@ -14,6 +14,9 @@ public class Preferences
     private static Context mContext;
     public static final String keyStartStation = "keyStartStation";
     public static final String keyStatusStateMachine = "keyStatusStateMachine";
+    public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
+
+
 
 
 
@@ -50,6 +53,17 @@ public class Preferences
 
 
 
+
+    //Boolean für Ansicht des Startstation-Textfeldes
+    public static void saveBooleanDetailedViewTextfieldStartstation(boolean value)
+    {
+        saveSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldStartstation, value);
+    }
+
+    public static boolean getBooleanDetailedViewTextfieldStartstation()
+    {
+        return readSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldStartstation);
+    }
 
 
 
@@ -93,5 +107,25 @@ public class Preferences
     {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
         return sharedPref.getInt(settingName, 0);
+    }
+
+
+
+
+
+
+    //Shared Preferences Operationen für Boolean
+    private static void saveSharedSettingBoolean(Context context, String settingName, boolean settingValue)
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(settingName, settingValue);
+        editor.apply();
+    }
+
+    private static boolean readSharedSettingBoolean(Context context, String settingName)
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(settingName, false);
     }
 }

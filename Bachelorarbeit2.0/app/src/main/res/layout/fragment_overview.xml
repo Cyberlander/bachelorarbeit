@@ -3,12 +3,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/llmain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:weightSum="1000">
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="/one"
-        android:textSize="40dp"
+        android:id="@+id/textview_startstation"
+        android:textSize="35sp"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Kein Startstation"
+        android:gravity="center"
         android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+
+        android:background="@color/colorPrimaryDark"
+        style="@style/MyMaterialTheme"
+        android:layout_weight="282"/>
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_height="5dp"
+        android:layout_width="fill_parent"
+        android:background="@color/colorAccent" />
+
+
+        <TextView
+            android:id="@+id/textview_targetstation"
+            android:textSize="35sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Keine Zielstation"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:background="@color/colorPrimaryDark"
+            style="@style/MyMaterialTheme"
+            android:layout_weight="282"/>
+
+        <View
+            android:id="@+id/viewLine2"
+            android:layout_height="5dp"
+            android:layout_width="fill_parent"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textview_payticket"
+            android:textSize="35sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Kein Ticket"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:background="@color/colorRed"
+            style="@style/MyMaterialTheme"
+            android:layout_weight="282"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
