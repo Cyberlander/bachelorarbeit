@@ -10,11 +10,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.cyberlandgo.felix.bachelorarbeit20.R;
+import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,10 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    String toastOnUIThreadMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //initialisiert das Feld monitoringActivity im Application-Objekt
+        //dieses weiß dann, das die Activity gestartet wurde
+        ((BillingSystemApplication) this.getApplicationContext()).setMonitoringActivity(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,5 +82,44 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+
+    public void ToastOnUIThread(String message)
+    {
+        toastOnUIThreadMessage = message;
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+                Toast.makeText(MainActivity.this, toastOnUIThreadMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((BillingSystemApplication) this.getApplicationContext()).setMonitoringActivity(this);
+        //initUIElements();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((BillingSystemApplication) this.getApplicationContext()).setMonitoringActivity(null);
     }
 }

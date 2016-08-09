@@ -148,15 +148,16 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             //Wenn die Activity im Vordergrund ist
             if (monitoringActivity != null)
             {
-
+                //todo logs entfernen
+                Log.e("////////","Activity ist im Vordergrund");
+                monitoringActivity.ToastOnUIThread(Preferences.getStartStation());
             }
             else if (monitoringActivity==null)
             {
                 Intent intent = new Intent(this, MainActivity.class);
-                // IMPORTANT: in the AndroidManifest.xml definition of this activity, you must set android:launchMode="singleInstance" or you will get two instances
-                // created when a user launches the activity manually and it gets launched from here.
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.startActivity(intent);
+
             }
 
         }
@@ -247,6 +248,16 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
     /**
+     * setzt die MainActivity als MonitoringActivity,
+     * dadurch können vom Application-Objekt Methoden
+     * der Activity aufgerufen werden
+     * @param activity
+     */
+    public void setMonitoringActivity(MainActivity activity) {
+        this.monitoringActivity = activity;
+    }
+
+    /**
      * Wenn die StateMachine sich im Status 0 befindet und ein geeigneter Beacon erkannt
      * wird, dann werden die Startstation, das Datum, die Zeit und der neue Status
      * der StateMachine persistent gespeichert. Der nachfolgende Status kann dabei
@@ -288,4 +299,5 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         Log.e("!!!!!!!!!!!!!",Preferences.getStartTime());
 
     }
+
 }
