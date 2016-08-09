@@ -5,6 +5,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
@@ -17,7 +18,9 @@ import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Felix on 06.08.2016.
@@ -27,12 +30,17 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     Preferences preferences;
     int currentStatusStateMachine;
 
+    CalendarHelper calendarHelper;
+
     //die StationDataSource ist die Schnittstelle zu lokalen SQLite-Datenbank
     //in der die Beacon-Regionen zugeordnet zu ihrem Standort gespeichert sind
     StationDataSource stationDataSource;
 
     ArrayList<Station> arrayListStationObjects;
     List<Region> listRegions;
+
+    //mappt die Minor-ID auf einen Stationsnamen
+    Map<String, String> minorStationMap;
 
 
     //Android Beacon Library
@@ -55,10 +63,21 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //holt sich den aktuellen Status der StateMachine
         currentStatusStateMachine = Preferences.getStatusStateMachine();
 
+        //greift auf das Calendar-Objekt zu und formatiert Datum und
+        //Zeit, damit es lesbarer ist
+        calendarHelper = new CalendarHelper();
+
+
+
         //holt über die StationDatasource Stationsobjekte aus der Datenbank
         arrayListStationObjects = getListOfStationObjectsFromDatabase();
 
+        //Wandelt die Liste der Stationsobjekte in eine Map um, bei der
+        //die Minors die Keys sind und die Stationsnamen die Values
+        minorStationMap = list2map(arrayListStationObjects);
+
         listRegions = RegionBuilder.getRegions(arrayListStationObjects);
+
 
 
         initializeBeaconManager();
@@ -113,8 +132,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
         {
+            //TODO logs entfernen
             Toast.makeText(getApplicationContext(), currentMajorIdentifierString +":" +currentMajorIdentifier,Toast.LENGTH_LONG).show();
             Log.e("!!!!!!!!!!",currentMajorIdentifierString +":" +currentMajorIdentifier);
+
+            saveStartDataOnEnterRegionFirstTime(currentMajorIdentifierString, currentMinorIdentifierString);
 
 
         }
@@ -184,6 +206,66 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         {
 
         }
+
+    }
+
+    /**wandelt die Liste von Stationen in eine Map um, bei der die Minor-ID der
+     * Schlüssel ist und der Stationsname der dazugehörige Wert
+     * @param list
+     * @return
+     */
+    public Map<String, String> list2map(List<Station> list) {
+        Map<String, String> map = new HashMap<String, String>();
+        //System.out.println(list);
+        for (int i = 0; i < list.size(); i++) {
+            map.put(list.get(i).getMinor(), list.get(i).getStationName());
+
+        }
+
+        return map;
+    }
+
+
+    /**
+     * Wenn die StateMachine sich im Status 0 befindet und ein geeigneter Beacon erkannt
+     * wird, dann werden die Startstation, das Datum, die Zeit und der neue Status
+     * der StateMachine persistent gespeichert. Der nachfolgende Status kann dabei
+     * variieren, denn die majorNumber bestimmt darüber, ob eine Bahn oder ein Bus
+     * betreten wurde
+     * @param majorNumber
+     * @param minorNumber
+     */
+    public void saveStartDataOnEnterRegionFirstTime(String majorNumber, String minorNumber)
+    {
+        //holt sich von der Map die zur Minor-ID zugehörige Startstation
+        String startStation = minorStationMap.get(minorNumber);
+
+
+        String currentMajorNumber = majorNumber;
+
+        Preferences.saveStartStation(startStation);
+        Preferences.saveStartDate(calendarHelper.getDateString());
+        Preferences.saveStartTime(calendarHelper.getTimeString());
+
+
+        //wenn eine Region betreten wurde, bei der die Major-ID 00000 ist (was für Bahn steht)
+        //dann ist der folgende Status STATUS_START_REGION_TRAIN
+        if (currentMajorNumber.equals("00000") || currentMajorNumber.equals("18475"))
+        {
+            Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_TRAIN);
+
+        }
+        //wenn eine Region betreten wurde, bei der die Major-ID 11111 ist (was für Bus steht)
+        //dann ist der folgende Status STATUS_START_REGION_TRAIN
+        else if (currentMajorNumber.equals("11111"))
+        {
+            Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
+        }
+
+        //TODO logs entfernen
+        Log.e("!!!!!!!!!!!!!",Preferences.getStartStation());
+        Log.e("!!!!!!!!!!!!!",Preferences.getStartDate());
+        Log.e("!!!!!!!!!!!!!",Preferences.getStartTime());
 
     }
 }

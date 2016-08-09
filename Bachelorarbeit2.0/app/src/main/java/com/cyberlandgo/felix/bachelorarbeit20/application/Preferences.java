@@ -14,8 +14,10 @@ public class Preferences
     private static Context mContext;
     public static final String keyStartStation = "keyStartStation";
     public static final String keyStatusStateMachine = "keyStatusStateMachine";
-    public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
+    public static final String keyStartDate = "keyStartDate";
+    public static final String keyStartTime = "keyStartTime";
 
+    public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
 
 
 
@@ -50,6 +52,34 @@ public class Preferences
     {
         return readSharedSettingInteger(mContext, keyStatusStateMachine);
     }
+
+
+    //Datum beim Start
+    public static void saveStartDate(String date)
+    {
+        saveSharedSetting(mContext, keyStartDate, date);
+    }
+
+    public static String getStartDate()
+    {
+        return readSharedSetting(mContext, keyStartDate);
+    }
+
+
+    //Zeit beim Start
+    public static void saveStartTime(String date)
+    {
+        saveSharedSetting(mContext, keyStartTime, date);
+    }
+
+    public static String getStartTime()
+    {
+        return readSharedSetting(mContext, keyStartTime);
+    }
+
+
+
+
 
 
 
