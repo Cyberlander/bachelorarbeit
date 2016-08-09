@@ -25,12 +25,19 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    FragmentOverview fragmentOverview;
+
     String toastOnUIThreadMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //initialisieren des FragmentOverviews
+        fragmentOverview = new FragmentOverview();
+
+
 
         //initialisiert das Feld monitoringActivity im Application-Objekt
         //dieses weiß dann, das die Activity gestartet wurde
@@ -45,12 +52,18 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+
+
         tabLayout.setupWithViewPager(viewPager);
+
+
+        updateUIonFragmentOverview();
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentOverview(), "Übersicht");
+        adapter.addFragment(fragmentOverview, "Übersicht");
         adapter.addFragment(new FragmentOverview(), "Teilstrecken");
         viewPager.setAdapter(adapter);
     }
@@ -99,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void updateUIonFragmentOverview()
+    {
+        //fragmentOverview.updateUI();
+    }
 
 
 

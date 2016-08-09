@@ -3,6 +3,8 @@ package com.cyberlandgo.felix.bachelorarbeit20.application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
+
 /**
  * Created by Felix on 06.08.2016.
  */
@@ -26,6 +28,8 @@ public class Preferences
     {
         INSTANCE = this;
         mContext = context;
+
+
     }
 
 
