@@ -45,7 +45,7 @@ public class FragmentOverview extends Fragment
 
 
         //Toast.makeText(getContext(), "" + station1.getStationName(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "" + Preferences.getBooleanDetailedViewTextfieldStartstation(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "" + Preferences.getBooleanDetailedViewTextfieldStartstation(), Toast.LENGTH_SHORT).show();
 
         return view;
     }

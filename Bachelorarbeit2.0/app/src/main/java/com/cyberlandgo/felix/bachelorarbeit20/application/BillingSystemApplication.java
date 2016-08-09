@@ -1,6 +1,7 @@
 package com.cyberlandgo.felix.bachelorarbeit20.application;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
+import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
 
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
@@ -41,6 +43,10 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
     //mappt die Minor-ID auf einen Stationsnamen
     Map<String, String> minorStationMap;
+
+    //die MainActivity, die bei Beacon-Detection im Hintergrund
+    //gestartet werden soll
+    private MainActivity monitoringActivity = null;
 
 
     //Android Beacon Library
@@ -136,8 +142,22 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Toast.makeText(getApplicationContext(), currentMajorIdentifierString +":" +currentMajorIdentifier,Toast.LENGTH_LONG).show();
             Log.e("!!!!!!!!!!",currentMajorIdentifierString +":" +currentMajorIdentifier);
 
+
             saveStartDataOnEnterRegionFirstTime(currentMajorIdentifierString, currentMinorIdentifierString);
 
+            //Wenn die Activity im Vordergrund ist
+            if (monitoringActivity != null)
+            {
+
+            }
+            else if (monitoringActivity==null)
+            {
+                Intent intent = new Intent(this, MainActivity.class);
+                // IMPORTANT: in the AndroidManifest.xml definition of this activity, you must set android:launchMode="singleInstance" or you will get two instances
+                // created when a user launches the activity manually and it gets launched from here.
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.startActivity(intent);
+            }
 
         }
 
