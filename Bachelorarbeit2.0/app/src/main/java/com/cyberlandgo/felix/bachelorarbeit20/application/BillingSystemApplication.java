@@ -1,7 +1,9 @@
 package com.cyberlandgo.felix.bachelorarbeit20.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ import java.util.Map;
 /**
  * Created by Felix on 06.08.2016.
  */
-public class BillingSystemApplication extends Application implements BootstrapNotifier
+public class BillingSystemApplication extends Application implements BootstrapNotifier,SharedPreferences.OnSharedPreferenceChangeListener
 {
     Preferences preferences;
     int currentStatusStateMachine;
@@ -95,6 +97,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
 
 
+        //Application lauscht nach Veränderungen der Preferences
+        SharedPreferences sharedPref = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
 
 
 
@@ -141,11 +146,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
         {
-            //TODO logs entfernen
-            Toast.makeText(getApplicationContext(), currentMajorIdentifierString +":" +currentMajorIdentifier,Toast.LENGTH_LONG).show();
-            Log.e("!!!!!!!!!!",currentMajorIdentifierString +":" +currentMajorIdentifier);
 
 
+
+            //speichern von Startstation,Datum und Zeit
+            //sowie vom Status, der je nach Major variiert
             saveStartDataOnEnterRegionFirstTime(currentMajorIdentifierString, currentMinorIdentifierString);
 
             //Wenn die Activity im Vordergrund ist
@@ -165,6 +170,19 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         }
 
+        //Betrifft nur den Train-Automatenteil
+        //wenn sich der Benutzer zwischen der Start- und der Endstation befindert
+        else if (currentStatusStateMachine == StateMachine.STATUS_BETWEEN_REGIONS_TRAIN)
+        {
+            //speichert vorläufige Enddaten
+            saveCurrentEndDataOnEnterTargetRegion(currentMinorIdentifierString);
+        }
+
+
+
+
+
+
     }
 
 
@@ -176,7 +194,15 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     @Override
     public void didExitRegion(Region region)
     {
-        Log.e("!!!!!!!!!!","flies away");
+        if (currentStatusStateMachine==StateMachine.STATUS_START_REGION_TRAIN)
+        {
+            Log.e("Nachricht:", "Wechsel vom Status start_region_train zu between");
+            //Update der StateMachine, wechselt nun von Start_region_train
+            // zu between_regions_train
+            currentStatusStateMachine = StateMachine.STATUS_BETWEEN_REGIONS_TRAIN;
+            Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
+
+        }
 
     }
 
@@ -284,22 +310,51 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //wenn eine Region betreten wurde, bei der die Major-ID 00000 ist (was für Bahn steht)
         //dann ist der folgende Status STATUS_START_REGION_TRAIN
-        if (currentMajorNumber.equals("00000") || currentMajorNumber.equals("18475"))
+        if (currentMajorNumber.equals(Values.MAJOR_ID_TRAIN) || currentMajorNumber.equals("18475"))
         {
             Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_TRAIN);
 
         }
         //wenn eine Region betreten wurde, bei der die Major-ID 11111 ist (was für Bus steht)
         //dann ist der folgende Status STATUS_START_REGION_TRAIN
-        else if (currentMajorNumber.equals("11111"))
+        else if (currentMajorNumber.equals(Values.MAJOR_ID_BUS))
         {
             Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
         }
 
-        //TODO logs entfernen
-        Log.e("!!!!!!!!!!!!!",Preferences.getStartStation());
-        Log.e("!!!!!!!!!!!!!",Preferences.getStartDate());
-        Log.e("!!!!!!!!!!!!!",Preferences.getStartTime());
+
+    }
+
+
+    /**
+     * Diese Methode betrifft nur den Train-Teil des Automaten
+     * Wenn sich der Automat im Status Between_stations_train befindet
+     * und dann eine neue Station erkennt, dann ist das die vorläufige
+     * Endstation und er speichert die wichtigen persistenten Daten
+     * wie Name der Endstation, Anzahl der Zwischenstationen,
+     * Ticketpreis und Streckenlänge. Die Fragments bemerkten
+     * dies durch ihre PreferenceListener und aktualisieren ihre UI
+     * @param minorNumber
+     */
+    public void saveCurrentEndDataOnEnterTargetRegion(String minorNumber)
+    {
+        //holt sich von der Map die zur Minor-ID zugehörige Zielstation
+        String targetStation = minorStationMap.get(minorNumber);
+        Preferences.saveCurrentTargetStation(targetStation);
+
+        Log.e("Zielstation:", targetStation);
+    }
+
+
+    @Override
+    public void  onSharedPreferenceChanged (SharedPreferences  sharedPreferences, String  key)
+    {
+        if (key.equals("keyStatusStateMachine"))
+        {
+            Log.e("Neuer Status: ",StateMachine.getStatusNameForStatusInteger(Preferences.getStatusStateMachine()));
+            currentStatusStateMachine = Preferences.getStatusStateMachine();
+
+        }
 
     }
 

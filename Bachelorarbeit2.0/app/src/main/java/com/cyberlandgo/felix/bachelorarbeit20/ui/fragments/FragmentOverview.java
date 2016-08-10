@@ -113,6 +113,22 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             textViewStartStation.setText(resultTextStart);
         }
 
+
+        //das Fragment holt sich die aktuellen Werte für die
+        //Endstation aus den Preferences und aktualisiert die UI
+        if (Preferences.getCurrentTargetStation().equals(""))
+        {
+            textViewTargetStation.setText("Keine Endstation");
+        }
+        else if (!Preferences.getCurrentTargetStation().equals(""))
+        {
+            String resultTextStart = Preferences.getCurrentTargetStation() + "\n Endstation";
+            SpannableString ss1=  new SpannableString(resultTextStart);
+            ss1.setSpan(new RelativeSizeSpan(1.617f), 0,Preferences.getCurrentTargetStation().length(), 0);
+            textViewTargetStation.setText(ss1);
+        }
+
+
     }
 
 

@@ -18,6 +18,7 @@ public class Preferences
     public static final String keyStatusStateMachine = "keyStatusStateMachine";
     public static final String keyStartDate = "keyStartDate";
     public static final String keyStartTime = "keyStartTime";
+    public static final String keyTargetStation = "keyTargetStation";
 
     public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
     public static final String keysaveCurrentStartstation = "keysaveCurrentStartstation";
@@ -82,6 +83,17 @@ public class Preferences
         return readSharedSetting(mContext, keyStartTime);
     }
 
+
+    //akutelle Endstation
+    public static void saveCurrentTargetStation(String target)
+    {
+        saveSharedSetting(mContext, keyTargetStation, target);
+    }
+
+    public static String getCurrentTargetStation()
+    {
+        return readSharedSetting(mContext, keyTargetStation);
+    }
 
 
 
