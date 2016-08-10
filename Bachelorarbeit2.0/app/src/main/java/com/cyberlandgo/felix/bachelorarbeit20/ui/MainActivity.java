@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
+import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentDebug;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(fragmentOverview, "Übersicht");
         adapter.addFragment(new FragmentOverview(), "Teilstrecken");
+        adapter.addFragment(new FragmentDebug(), "Debug");
         viewPager.setAdapter(adapter);
     }
 

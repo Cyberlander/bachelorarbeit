@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llmain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:weightSum="1000">
+
+    <TextView
+        android:id="@+id/textview_currentStatus"
+        android:textSize="35sp"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Status"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:background="@color/colorPrimaryDark"
+        style="@style/MyMaterialTheme"
+        android:layout_weight="282"/>
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_height="5dp"
+        android:layout_width="fill_parent"
+        android:background="@color/colorAccent" />
+
+
+        <TextView
+            android:id="@+id/textview_currentStation"
+            android:textSize="35sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Aktuelle Station"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:background="@color/colorPrimaryDark"
+            style="@style/MyMaterialTheme"
+            android:layout_weight="282"/>
+
+        <View
+            android:id="@+id/viewLine2"
+            android:layout_height="5dp"
+            android:layout_width="fill_parent"
+            android:background="@color/colorAccent" />
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
