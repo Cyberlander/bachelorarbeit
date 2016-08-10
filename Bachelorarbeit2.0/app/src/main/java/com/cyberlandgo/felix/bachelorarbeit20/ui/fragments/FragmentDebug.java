@@ -70,6 +70,18 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
     {
         String currentStatusString = StateMachine.getStatusNameForStatusInteger(Preferences.getStatusStateMachine());
         textViewCurrentStatus.setText(currentStatusString);
+
+        //noch keine Startstation gesehen
+        if (Preferences.getCurrentStartstation().equals(""))
+        {
+            textViewCurrentStation.setText("Noch keine Startstation");
+        }
+        //schon eine Startstation gesehen
+        else
+        {
+            textViewCurrentStation.setText(Preferences.getCurrentStartstation());
+
+        }
     }
 
 

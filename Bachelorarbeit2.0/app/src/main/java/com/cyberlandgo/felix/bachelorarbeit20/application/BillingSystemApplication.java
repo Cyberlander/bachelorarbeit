@@ -135,6 +135,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         String currentMajorIdentifierString = "" + currentMajorIdentifier;
         String currentMinorIdentifierString = "" + currentMinorIdentifier;
 
+        //für Debugging: aktuelle Station loggen
+        Preferences.saveCurrentStartstation(minorStationMap.get(currentMinorIdentifierString));
+
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
         {

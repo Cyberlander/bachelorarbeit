@@ -20,6 +20,7 @@ public class Preferences
     public static final String keyStartTime = "keyStartTime";
 
     public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
+    public static final String keysaveCurrentStartstation = "keysaveCurrentStartstation";
 
 
 
@@ -99,6 +100,26 @@ public class Preferences
         return readSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldStartstation);
     }
 
+
+
+
+
+
+
+
+
+
+
+    //aktuelle Station für DebugZwecke bzw. zuletzt gesehende Station
+    public static void saveCurrentStartstation(String value)
+    {
+        saveSharedSetting(mContext, keysaveCurrentStartstation, value);
+    }
+
+    public static String getCurrentStartstation()
+    {
+        return readSharedSetting(mContext, keysaveCurrentStartstation);
+    }
 
 
 
