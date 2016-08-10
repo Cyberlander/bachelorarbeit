@@ -175,7 +175,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         else if (currentStatusStateMachine == StateMachine.STATUS_BETWEEN_REGIONS_TRAIN)
         {
             //speichert vorläufige Enddaten
-            saveCurrentEndDataOnEnterTargetRegion(currentMinorIdentifierString);
+            saveCurrentEndDataOnEnterTargetRegionTrain(currentMinorIdentifierString);
         }
 
 
@@ -336,11 +336,12 @@ public class BillingSystemApplication extends Application implements BootstrapNo
      * dies durch ihre PreferenceListener und aktualisieren ihre UI
      * @param minorNumber
      */
-    public void saveCurrentEndDataOnEnterTargetRegion(String minorNumber)
+    public void saveCurrentEndDataOnEnterTargetRegionTrain(String minorNumber)
     {
         //holt sich von der Map die zur Minor-ID zugehörige Zielstation
         String targetStation = minorStationMap.get(minorNumber);
         Preferences.saveCurrentTargetStation(targetStation);
+        Preferences.saveStatusStateMachine(StateMachine.STATUS_END_REGION_TRAIN);
 
         Log.e("Zielstation:", targetStation);
     }
