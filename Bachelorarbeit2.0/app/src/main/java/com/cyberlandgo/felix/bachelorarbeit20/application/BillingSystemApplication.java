@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
@@ -342,6 +343,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         String targetStation = minorStationMap.get(minorNumber);
         Preferences.saveCurrentTargetStation(targetStation);
         Preferences.saveStatusStateMachine(StateMachine.STATUS_END_REGION_TRAIN);
+
+        //Menge der zurückgelegten Stationen ausrechnen
+        int positionStartStation = StationDistanceHelper.getPositionForName(Preferences.getStartStation());
+        int positionEndStation = StationDistanceHelper.getPositionForName(Preferences.getCurrentTargetStation());
+        int newAmountStations = Math.abs(positionStartStation - positionEndStation);
+        Preferences.saveCurrentAmountOfStations(newAmountStations);
+        Log.e("GGGGGGG!", ""+ Preferences.getCurrentAmountOfStations());
 
         Log.e("Zielstation:", targetStation);
     }

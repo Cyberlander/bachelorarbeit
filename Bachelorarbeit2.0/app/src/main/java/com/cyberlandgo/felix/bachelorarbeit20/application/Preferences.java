@@ -20,6 +20,10 @@ public class Preferences
     public static final String keyStartTime = "keyStartTime";
     public static final String keyTargetStation = "keyTargetStation";
 
+    public static final String keyCurrentAmountOfStations = "keyCurrentAmountOfStations";
+
+
+
     public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
     public static final String keysaveCurrentStartstation = "keysaveCurrentStartstation";
 
@@ -95,6 +99,17 @@ public class Preferences
         return readSharedSetting(mContext, keyTargetStation);
     }
 
+
+    //Menge der Stationen
+    public static void saveCurrentAmountOfStations(int amount)
+    {
+        saveSharedSettingInteger(mContext, keyCurrentAmountOfStations, amount);
+    }
+
+    public static int getCurrentAmountOfStations()
+    {
+        return readSharedSettingInteger(mContext, keyCurrentAmountOfStations);
+    }
 
 
 

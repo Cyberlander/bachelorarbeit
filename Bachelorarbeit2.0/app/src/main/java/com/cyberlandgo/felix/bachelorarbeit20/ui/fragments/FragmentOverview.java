@@ -62,8 +62,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         initUIElements();
         updateUI();
 
-        String s1 = Values.STATION_U2_BILLSTEDT;
-        String s2 = Values.STATION_U2_HAGENBECKS_TIERPARK;
+
 
 
         return view;
