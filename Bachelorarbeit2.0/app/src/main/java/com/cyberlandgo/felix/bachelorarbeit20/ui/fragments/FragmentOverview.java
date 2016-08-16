@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
+import com.cyberlandgo.felix.bachelorarbeit20.application.StateMachine;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
@@ -85,6 +86,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         textViewPayTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 payTicketResetPreferences();
             }
         });
@@ -138,6 +140,20 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         }
 
 
+        if (Preferences.getBooleanHasToPayTicket()==true)
+        {
+            String stringPayTicket = "Ticket bezahlen!";
+            String resultTextPayTicket = stringPayTicket + "\n" + "0,00 Euro";
+            SpannableString ss1=  new SpannableString(resultTextPayTicket);
+            ss1.setSpan(new RelativeSizeSpan(1.617f), 0,stringPayTicket.length(), 0);
+            textViewPayTicket.setText(ss1);
+        }
+        else if (Preferences.getBooleanHasToPayTicket()==false)
+        {
+            textViewPayTicket.setText("Kein Ticket");
+        }
+
+
     }
 
 
@@ -157,7 +173,18 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
     //TODO Kommunikation mit dem Server (Logging)
     public void payTicketResetPreferences()
     {
-
+        if (Preferences.getBooleanHasToPayTicket()==true)
+        {
+            //Zurücksetzen sämtlicher Werte
+            Preferences.saveBooleanHasToPayTicket(false);
+            Preferences.saveCurrentAmountOfStations(0);
+            Preferences.saveCurrentStartstation("");
+            Preferences.saveStartStation("");
+            Preferences.saveStartDate("");
+            Preferences.saveStartTime("");
+            Preferences.saveCurrentTargetStation("");
+            Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
+        }
     }
 
 

@@ -351,8 +351,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
         int amountOfStation = oldAmountOfStation + newAmountStations;
+
+        //Menge der zurückgelegten Stationen speichern
         Preferences.saveCurrentAmountOfStations(amountOfStation);
 
+
+        //ab jetzt kann ein Ticket bezahlt werden
+        Preferences.saveBooleanHasToPayTicket(true);
 
     }
 

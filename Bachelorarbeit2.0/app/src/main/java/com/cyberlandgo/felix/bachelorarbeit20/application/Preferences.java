@@ -19,6 +19,11 @@ public class Preferences
     public static final String keyStartDate = "keyStartDate";
     public static final String keyStartTime = "keyStartTime";
     public static final String keyTargetStation = "keyTargetStation";
+    public static final String keyBooleanHasToPayTicket = "keyBooleanHasToPayTicket";
+
+
+
+
 
     public static final String keyCurrentAmountOfStations = "keyCurrentAmountOfStations";
 
@@ -113,6 +118,16 @@ public class Preferences
 
 
 
+    //Status ob ein Ticket bezahlt werden muss
+    public static void saveBooleanHasToPayTicket(boolean value)
+    {
+        saveSharedSettingBoolean(mContext, keyBooleanHasToPayTicket, value);
+    }
+
+    public static boolean getBooleanHasToPayTicket()
+    {
+        return readSharedSettingBoolean(mContext, keyBooleanHasToPayTicket);
+    }
 
 
 
