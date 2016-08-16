@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
+import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 
@@ -60,8 +62,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         initUIElements();
         updateUI();
 
-        //Toast.makeText(getContext(), "" + station1.getStationName(), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getContext(), "" + Preferences.getBooleanDetailedViewTextfieldStartstation(), Toast.LENGTH_SHORT).show();
+        String s1 = Values.STATION_U2_BILLSTEDT;
+        String s2 = Values.STATION_U2_HAGENBECKS_TIERPARK;
+
 
         return view;
     }
@@ -77,6 +80,13 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             public void onClick(View view)
             {
                 changeStartStationDetails();
+            }
+        });
+
+        textViewPayTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                payTicketResetPreferences();
             }
         });
 
@@ -141,6 +151,17 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
     }
 
 
+    /**
+     * Diese Methode setzt alle Preferences in ihren Anfangszustand, d.h. auch
+     * der Automat befindet sich wieder im Zustand not running
+     */
+    //TODO Kommunikation mit dem Server (Logging)
+    public void payTicketResetPreferences()
+    {
+
+    }
+
+
 
     /**
      * Callback-Methode, die darauf reagiert, wenn sich die Preferences geändert haben,
@@ -153,7 +174,6 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
     public void  onSharedPreferenceChanged  (SharedPreferences  sharedPreferences, String  key)
     {
         updateUI();
-        Log.e("yeah","Startstation wurde gefunden");
     }
 
 

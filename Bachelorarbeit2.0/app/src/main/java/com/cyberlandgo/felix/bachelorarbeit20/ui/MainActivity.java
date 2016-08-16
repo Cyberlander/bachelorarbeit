@@ -10,13 +10,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
+import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentDebug;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
 
