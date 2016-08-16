@@ -24,6 +24,10 @@ public final class Values
     public static final String BETWEEN_SCANS_BACKGROUND_KEY="between_scans_background_key";
     public static final String SCAN_PERIOD_BACKGROUND_KEY="scan_period_background_key";
 
+    public static final String KURZSTRECKE = "Kurzstrecke";
+    public static final String MITTELSTRECKE = "Mittelstrecke";
+    public static final String LANGSTRECKE = "Langstrecke";
+
 
     //Haltestellen U2
     public static final String STATION_U2_NIENDORF_NORD = "Niendorf Nord";
