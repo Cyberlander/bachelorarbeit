@@ -348,10 +348,12 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         int positionStartStation = StationDistanceHelper.getPositionForName(Preferences.getStartStation());
         int positionEndStation = StationDistanceHelper.getPositionForName(Preferences.getCurrentTargetStation());
         int newAmountStations = Math.abs(positionStartStation - positionEndStation);
-        Preferences.saveCurrentAmountOfStations(newAmountStations);
-        Log.e("GGGGGGG!", ""+ Preferences.getCurrentAmountOfStations());
 
-        Log.e("Zielstation:", targetStation);
+        int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
+        int amountOfStation = oldAmountOfStation + newAmountStations;
+        Preferences.saveCurrentAmountOfStations(amountOfStation);
+
+
     }
 
 
