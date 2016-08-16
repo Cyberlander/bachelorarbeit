@@ -110,7 +110,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 stationen_u2[12] = new Station(Values.STATION_U2_GAENSEMARKT, Values.MAJOR_ID_TRAIN,"00212");
                 stationen_u2[13] = new Station(Values.STATION_U2_JUNGFERNSTIEG, Values.MAJOR_ID_TRAIN,"00213");
                 stationen_u2[14] = new Station(Values.STATION_U2_HAUPTBAHNHOF_NORD, Values.MAJOR_ID_TRAIN,"00214");
-                stationen_u2[15] = new Station(Values.STATION_U2_BERLINER_TOR, Values.MAJOR_ID_TRAIN,"00215");
+                stationen_u2[15] = new Station(Values.STATION_U2_BERLINER_TOR, Values.MAJOR_ID_TRAIN,"20015");
                 stationen_u2[16] = new Station(Values.STATION_U2_BURGSTRASSE, Values.MAJOR_ID_TRAIN,"00216");
                 stationen_u2[17] = new Station(Values.STATION_U2_HAMMER_KIRCHE, Values.MAJOR_ID_TRAIN,"00217");
                 stationen_u2[18] = new Station(Values.STATION_U2_RAUES_HAUS, Values.MAJOR_ID_TRAIN,"00218");

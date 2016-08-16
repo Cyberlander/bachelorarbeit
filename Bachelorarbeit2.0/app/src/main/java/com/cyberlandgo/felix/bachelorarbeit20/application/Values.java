@@ -11,7 +11,7 @@ public final class Values
     }
     public static final String GLOBAL_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 
-    public static final String MAJOR_ID_TRAIN = "00000";
+    public static final String MAJOR_ID_TRAIN = "10000";
     public static final String MAJOR_ID_BUS = "11111";
 
     public static final String LEER_STRING = "-";

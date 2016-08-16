@@ -44,7 +44,7 @@ public class TicketDetailHelper
         {
             resultString = "3,00 Euro";
         }
-        
+
         return resultString;
     }
 

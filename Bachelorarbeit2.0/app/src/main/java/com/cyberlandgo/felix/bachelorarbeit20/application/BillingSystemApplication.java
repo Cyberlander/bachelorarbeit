@@ -95,6 +95,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         for (int i = 0; i < listRegions.size(); i++) {
             regionBootstrap[i] = new RegionBootstrap(this, listRegions.get(i));
+            Log.e("GutenTAG",listRegions.get(i).toString());
         }
 
 
