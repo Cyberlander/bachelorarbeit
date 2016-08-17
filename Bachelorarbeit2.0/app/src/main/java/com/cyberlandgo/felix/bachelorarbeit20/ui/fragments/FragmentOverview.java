@@ -56,8 +56,6 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_overview, container, false);
 
-        //todo zu testzwecken, bitte entfernen
-        showPayDialog();
 
         stationDataSource = new StationDataSource(getContext());
         stationDataSource.open();
@@ -93,7 +91,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             @Override
             public void onClick(View view) {
 
-                payTicketResetPreferences();
+
+                showPayDialog();
+
             }
         });
 
@@ -248,7 +248,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // positive button logic
+                        payTicketResetPreferences();
                     }
                 });
 
