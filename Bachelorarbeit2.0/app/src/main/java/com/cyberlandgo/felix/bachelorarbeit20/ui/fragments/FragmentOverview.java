@@ -69,7 +69,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
 
 
-
+        Toast.makeText(getContext(),""+Preferences.getCurrentAmountOfStations(),Toast.LENGTH_LONG).show();
         return view;
     }
 
@@ -92,7 +92,10 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             public void onClick(View view) {
 
 
-                showPayDialog();
+                if (Preferences.getBooleanHasToPayTicket()==true)
+                {
+                    showPayDialog();
+                }
 
             }
         });
@@ -148,10 +151,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
         if (Preferences.getBooleanHasToPayTicket()==true)
         {
-            String stringPayTicket = "Ticket bezahlen!";
-            String resultTextPayTicket = stringPayTicket + "\n" + "0,00 Euro";
+            String resultTextPayTicket = "Ticket bezahlen!";
             SpannableString ss1=  new SpannableString(resultTextPayTicket);
-            ss1.setSpan(new RelativeSizeSpan(1.617f), 0,stringPayTicket.length(), 0);
+            ss1.setSpan(new RelativeSizeSpan(1.617f), 0,resultTextPayTicket.length(), 0);
             textViewPayTicket.setText(ss1);
         }
         else if (Preferences.getBooleanHasToPayTicket()==false)

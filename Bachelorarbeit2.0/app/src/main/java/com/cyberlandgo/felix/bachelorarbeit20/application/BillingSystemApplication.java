@@ -180,6 +180,25 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             saveCurrentEndDataOnEnterTargetRegionTrain(currentMinorIdentifierString);
         }
 
+        //Der Automat befindet sich im Zustand END_REGION_TRAIN.
+        //Mögliche Szenarien sind das Betreten einer weiteren
+        //Train-Region, dann wird wieder in den Zustand between
+        //Stations gewechselt. Oder der Automat wechselt in
+        //den Zustand START_REGION_BUS. Feststellen lässt sich das über die Major-ID
+        else if (currentStatusStateMachine == StateMachine.STATUS_END_REGION_TRAIN)
+        {
+            //ist es eine Train-Region?
+            if (currentMajorIdentifierString.equals("10000"))
+            {
+                Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
+            }
+            else if (currentMajorIdentifierString.equals("11111"))
+            {
+                Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
+            }
+
+        }
+
 
 
 
@@ -353,6 +372,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
         int amountOfStation = oldAmountOfStation + newAmountStations;
 
+        Log.e("OLDDDDDDDDD", ""+ oldAmountOfStation);
+        Log.e("NEEEEEEEEEW",""+ amountOfStation);
         //Menge der zurückgelegten Stationen speichern
         Preferences.saveCurrentAmountOfStations(amountOfStation);
 
