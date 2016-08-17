@@ -4,9 +4,11 @@ package com.cyberlandgo.felix.bachelorarbeit20.ui.fragments;
  * Created by Felix on 06.08.2016.
  */
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
 import com.cyberlandgo.felix.bachelorarbeit20.application.StateMachine;
@@ -52,6 +55,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_overview, container, false);
+
+        //todo zu testzwecken, bitte entfernen
+        showPayDialog();
 
         stationDataSource = new StationDataSource(getContext());
         stationDataSource.open();
@@ -223,6 +229,45 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         SharedPreferences sharedPref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
+    }
+
+
+
+
+    private void showPayDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Ticket bezahlen");
+        String strecke = TicketDetailHelper.getLineLengthForAmountOfStations();
+        String preis = TicketDetailHelper.getPriceForLineLength(strecke);
+        String content = "Strecke: " + strecke + "\n" + "Preis: " + preis;
+        builder.setMessage(content);
+
+
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                    }
+                });
+
+        builder.setNegativeButton("Abbrechen",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+
+
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
     }
 
 }

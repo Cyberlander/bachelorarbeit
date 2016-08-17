@@ -123,9 +123,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 
                 //Erstellen der 281er Bus-Stationen-Objekte
                 Station[] stationen_bus_281 = new Station[3];
-                stationen_bus_281[0] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"02810");
-                stationen_bus_281[1] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"02811");
-                stationen_bus_281[2] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"02812");
+                stationen_bus_281[0] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"28100");
+                stationen_bus_281[1] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"28101");
+                stationen_bus_281[2] = new Station(Values.STATION_BUS_281_HAGENBECKS_TIERPARK, Values.MAJOR_ID_BUS,"28102");
 
 
 
