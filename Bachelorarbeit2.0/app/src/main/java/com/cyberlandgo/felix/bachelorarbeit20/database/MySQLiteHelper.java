@@ -95,31 +95,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 
                 //Erstellen der U2 Stationen-Objekte
                 Station[] stationen_u2 = new Station[25];
-                stationen_u2[0] = new Station(Values.STATION_U2_NIENDORF_NORD, Values.MAJOR_ID_TRAIN,"00200");
-                stationen_u2[1] = new Station(Values.STATION_U2_SCHIPPELSWEG, Values.MAJOR_ID_TRAIN,"00201");
-                stationen_u2[2] = new Station(Values.STATION_U2_JOACHIM_MAEHL_STRASSE, Values.MAJOR_ID_TRAIN,"00202");
-                stationen_u2[3] = new Station(Values.STATION_U2_NIENDORF_MARKT, Values.MAJOR_ID_TRAIN,"00203");
-                stationen_u2[4] = new Station(Values.STATION_U2_HAGENDEEL, Values.MAJOR_ID_TRAIN,"00204");
-                stationen_u2[5] = new Station(Values.STATION_U2_HAGENBECKS_TIERPARK, Values.MAJOR_ID_TRAIN,"00205");
-                stationen_u2[6] = new Station(Values.STATION_U2_LUTTHEROTHSTRASSE, Values.MAJOR_ID_TRAIN,"00206");
-                stationen_u2[7] = new Station(Values.STATION_U2_OSTERSTRASSE, Values.MAJOR_ID_TRAIN,"00207");
-                stationen_u2[8] = new Station(Values.STATION_U2_EMILIENSTRASSE, Values.MAJOR_ID_TRAIN,"00208");
-                stationen_u2[9] = new Station(Values.STATION_U2_CHRISTUSKIRCHE, Values.MAJOR_ID_TRAIN,"00209");
-                stationen_u2[10] = new Station(Values.STATION_U2_SCHLUMP, Values.MAJOR_ID_TRAIN,"00210");
-                stationen_u2[11] = new Station(Values.STATION_U2_MESSEHALLEN, Values.MAJOR_ID_TRAIN,"00211");
-                stationen_u2[12] = new Station(Values.STATION_U2_GAENSEMARKT, Values.MAJOR_ID_TRAIN,"00212");
-                stationen_u2[13] = new Station(Values.STATION_U2_JUNGFERNSTIEG, Values.MAJOR_ID_TRAIN,"00213");
-                stationen_u2[14] = new Station(Values.STATION_U2_HAUPTBAHNHOF_NORD, Values.MAJOR_ID_TRAIN,"00214");
+                stationen_u2[0] = new Station(Values.STATION_U2_NIENDORF_NORD, Values.MAJOR_ID_TRAIN,"20000");
+                stationen_u2[1] = new Station(Values.STATION_U2_SCHIPPELSWEG, Values.MAJOR_ID_TRAIN,"20001");
+                stationen_u2[2] = new Station(Values.STATION_U2_JOACHIM_MAEHL_STRASSE, Values.MAJOR_ID_TRAIN,"20002");
+                stationen_u2[3] = new Station(Values.STATION_U2_NIENDORF_MARKT, Values.MAJOR_ID_TRAIN,"20003");
+                stationen_u2[4] = new Station(Values.STATION_U2_HAGENDEEL, Values.MAJOR_ID_TRAIN,"20004");
+                stationen_u2[5] = new Station(Values.STATION_U2_HAGENBECKS_TIERPARK, Values.MAJOR_ID_TRAIN,"20005");
+                stationen_u2[6] = new Station(Values.STATION_U2_LUTTHEROTHSTRASSE, Values.MAJOR_ID_TRAIN,"20006");
+                stationen_u2[7] = new Station(Values.STATION_U2_OSTERSTRASSE, Values.MAJOR_ID_TRAIN,"20007");
+                stationen_u2[8] = new Station(Values.STATION_U2_EMILIENSTRASSE, Values.MAJOR_ID_TRAIN,"20008");
+                stationen_u2[9] = new Station(Values.STATION_U2_CHRISTUSKIRCHE, Values.MAJOR_ID_TRAIN,"20009");
+                stationen_u2[10] = new Station(Values.STATION_U2_SCHLUMP, Values.MAJOR_ID_TRAIN,"20010");
+                stationen_u2[11] = new Station(Values.STATION_U2_MESSEHALLEN, Values.MAJOR_ID_TRAIN,"20011");
+                stationen_u2[12] = new Station(Values.STATION_U2_GAENSEMARKT, Values.MAJOR_ID_TRAIN,"20012");
+                stationen_u2[13] = new Station(Values.STATION_U2_JUNGFERNSTIEG, Values.MAJOR_ID_TRAIN,"20013");
+                stationen_u2[14] = new Station(Values.STATION_U2_HAUPTBAHNHOF_NORD, Values.MAJOR_ID_TRAIN,"20014");
                 stationen_u2[15] = new Station(Values.STATION_U2_BERLINER_TOR, Values.MAJOR_ID_TRAIN,"20015");
-                stationen_u2[16] = new Station(Values.STATION_U2_BURGSTRASSE, Values.MAJOR_ID_TRAIN,"00216");
-                stationen_u2[17] = new Station(Values.STATION_U2_HAMMER_KIRCHE, Values.MAJOR_ID_TRAIN,"00217");
-                stationen_u2[18] = new Station(Values.STATION_U2_RAUES_HAUS, Values.MAJOR_ID_TRAIN,"00218");
-                stationen_u2[19] = new Station(Values.STATION_U2_HORNER_RENNBAHN, Values.MAJOR_ID_TRAIN,"00219");
-                stationen_u2[20] = new Station(Values.STATION_U2_LEGIENSTRASSE, Values.MAJOR_ID_TRAIN,"00220");
-                stationen_u2[21] = new Station(Values.STATION_U2_BILLSTEDT, Values.MAJOR_ID_TRAIN,"00221");
-                stationen_u2[22] = new Station(Values.STATION_U2_MERKENSTRASSE, Values.MAJOR_ID_TRAIN,"00222");
-                stationen_u2[23] = new Station(Values.STATION_U2_STEINFURTER_ALLEE, Values.MAJOR_ID_TRAIN,"00223");
-                stationen_u2[24] = new Station(Values.STATION_U2_MUEMMELMANNSBERG, Values.MAJOR_ID_TRAIN,"00224");
+                stationen_u2[16] = new Station(Values.STATION_U2_BURGSTRASSE, Values.MAJOR_ID_TRAIN,"20016");
+                stationen_u2[17] = new Station(Values.STATION_U2_HAMMER_KIRCHE, Values.MAJOR_ID_TRAIN,"20017");
+                stationen_u2[18] = new Station(Values.STATION_U2_RAUES_HAUS, Values.MAJOR_ID_TRAIN,"20018");
+                stationen_u2[19] = new Station(Values.STATION_U2_HORNER_RENNBAHN, Values.MAJOR_ID_TRAIN,"20019");
+                stationen_u2[20] = new Station(Values.STATION_U2_LEGIENSTRASSE, Values.MAJOR_ID_TRAIN,"20020");
+                stationen_u2[21] = new Station(Values.STATION_U2_BILLSTEDT, Values.MAJOR_ID_TRAIN,"20021");
+                stationen_u2[22] = new Station(Values.STATION_U2_MERKENSTRASSE, Values.MAJOR_ID_TRAIN,"20222");
+                stationen_u2[23] = new Station(Values.STATION_U2_STEINFURTER_ALLEE, Values.MAJOR_ID_TRAIN,"20023");
+                stationen_u2[24] = new Station(Values.STATION_U2_MUEMMELMANNSBERG, Values.MAJOR_ID_TRAIN,"20024");
 
                 //Erstellen der 281er Bus-Stationen-Objekte
                 Station[] stationen_bus_281 = new Station[3];
