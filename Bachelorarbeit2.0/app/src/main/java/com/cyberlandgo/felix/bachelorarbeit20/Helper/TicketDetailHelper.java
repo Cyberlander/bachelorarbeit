@@ -36,11 +36,11 @@ public class TicketDetailHelper
         {
             resultString = "1,00 Euro";
         }
-        else if (linelength.equals(Values.KURZSTRECKE))
+        else if (linelength.equals(Values.MITTELSTRECKE))
         {
             resultString = "2,00 Euro";
         }
-        else if (linelength.equals(Values.KURZSTRECKE))
+        else if (linelength.equals(Values.LANGSTRECKE))
         {
             resultString = "3,00 Euro";
         }

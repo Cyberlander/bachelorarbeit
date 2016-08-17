@@ -239,6 +239,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         builder.setTitle("Ticket bezahlen");
         String strecke = TicketDetailHelper.getLineLengthForAmountOfStations();
         String preis = TicketDetailHelper.getPriceForLineLength(strecke);
+
         String content = "Strecke: " + strecke + "\n" + "Preis: " + preis;
         builder.setMessage(content);
 
