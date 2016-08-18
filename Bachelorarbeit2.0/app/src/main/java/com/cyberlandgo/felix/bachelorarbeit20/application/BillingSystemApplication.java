@@ -1,13 +1,17 @@
 package com.cyberlandgo.felix.bachelorarbeit20.application;
 
 import android.app.Application;
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.BluetoothHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
@@ -59,6 +63,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     //damit die Callbacks ausgelöst werden
     private RegionBootstrap[] regionBootstrap;
 
+    BroadcastReceiver bluetoothGuard;
+
 
     @Override
     public void onCreate()
@@ -89,13 +95,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
 
+
         initializeBeaconManager();
 
         regionBootstrap = new RegionBootstrap[listRegions.size()];
 
         for (int i = 0; i < listRegions.size(); i++) {
             regionBootstrap[i] = new RegionBootstrap(this, listRegions.get(i));
-            Log.e("GutenTAG",listRegions.get(i).toString());
         }
 
 
@@ -105,7 +111,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
 
-
+        //Der BluetoothGuard ist ein BroadcastReceiver, der
+        //darauf reagiert, ob Bluetooth abgeschaltet wird
+        bluetoothGuard = BluetoothHelper.getBluetoothGuard();
 
     }
 
@@ -149,7 +157,10 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
         {
 
-
+            //registrieren des BluetoothGuards, der reagiert,
+            //wenn das Bluetooth abgeschaltet wird
+            IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(bluetoothGuard, filter);
 
             //speichern von Startstation,Datum und Zeit
             //sowie vom Status, der je nach Major variiert
@@ -441,5 +452,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
 
     }
+
+
+
+
+
+
 
 }

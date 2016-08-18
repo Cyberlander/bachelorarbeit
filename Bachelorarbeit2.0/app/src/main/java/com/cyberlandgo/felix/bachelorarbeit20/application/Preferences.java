@@ -20,8 +20,7 @@ public class Preferences
     public static final String keyStartTime = "keyStartTime";
     public static final String keyTargetStation = "keyTargetStation";
     public static final String keyBooleanHasToPayTicket = "keyBooleanHasToPayTicket";
-
-
+    public static final String keyBooleanIsBluetoothGuardActive = "keyBooleanIsBluetoothGuardActive";
 
 
 
@@ -143,7 +142,16 @@ public class Preferences
     }
 
 
+    //Boolean Bluetooth Guard
+    public static void saveBooleanIsBluetoothGuardActive(boolean value)
+    {
+        saveSharedSettingBoolean(mContext, keyBooleanIsBluetoothGuardActive, value);
+    }
 
+    public static boolean getBooleanIsBluetoothGuardActive()
+    {
+        return readSharedSettingBoolean(mContext, keyBooleanIsBluetoothGuardActive);
+    }
 
 
 
