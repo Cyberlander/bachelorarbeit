@@ -199,6 +199,25 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         }
 
+        //Wenn der Automat sich im Zustan START_REGION_BUS befindet, wechselt
+        //er in END_REGION_BUS
+        else if (currentStatusStateMachine == StateMachine.STATUS_START_REGION_BUS)
+        {
+            saveCurrentEndDataOnEnterTargetRegionBus(currentMinorIdentifierString);
+        }
+
+        else if (currentStatusStateMachine == StateMachine.STATUS_END_REGION_BUS)
+        {
+            if (currentMajorIdentifier.equals(Values.MAJOR_ID_BUS))
+            {
+
+            }
+            else if (currentMajorIdentifier.equals(Values.MAJOR_ID_TRAIN))
+            {
+                Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
+            }
+        }
+
 
 
 
@@ -224,6 +243,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
 
         }
+
 
     }
 
@@ -382,6 +402,32 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         Preferences.saveBooleanHasToPayTicket(true);
 
     }
+
+
+
+
+    public void saveCurrentEndDataOnEnterTargetRegionBus(String minorNumber)
+    {
+        String targetStation = minorStationMap.get(minorNumber);
+        Preferences.saveCurrentTargetStation(targetStation);
+        Preferences.saveStatusStateMachine(StateMachine.STATUS_END_REGION_BUS);
+
+        int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
+        int amountOfStation = oldAmountOfStation + 1;
+
+        //Menge der zurückgelegten Stationen speichern
+        Preferences.saveCurrentAmountOfStations(amountOfStation);
+
+
+        //ab jetzt kann ein Ticket bezahlt werden
+        Preferences.saveBooleanHasToPayTicket(true);
+    }
+
+
+
+
+
+
 
 
     @Override
