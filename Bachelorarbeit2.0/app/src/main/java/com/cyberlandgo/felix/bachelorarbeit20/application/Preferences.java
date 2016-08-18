@@ -24,6 +24,7 @@ public class Preferences
 
 
 
+
     public static final String keyCurrentAmountOfStations = "keyCurrentAmountOfStations";
 
 
@@ -152,7 +153,6 @@ public class Preferences
     {
         return readSharedSettingBoolean(mContext, keyBooleanIsBluetoothGuardActive);
     }
-
 
 
 

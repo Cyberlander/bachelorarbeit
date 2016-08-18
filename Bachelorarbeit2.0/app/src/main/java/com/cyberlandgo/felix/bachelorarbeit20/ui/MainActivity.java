@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.DialogHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
@@ -125,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    public void showBluetoothGuardDialog()
+    {
+        Log.e("MainActivity hier", "Dialog wird gezeigt");  
+        DialogHelper.getBluetoothGuardDialog(this).show();
+    }
 
 
 

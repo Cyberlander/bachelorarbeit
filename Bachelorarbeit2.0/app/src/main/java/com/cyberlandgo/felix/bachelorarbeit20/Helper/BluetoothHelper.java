@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
+import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
+
 /**
  * Created by Felix on 18.08.2016.
  */
 public class BluetoothHelper
 {
-    public static BroadcastReceiver getBluetoothGuard()
+    public static BroadcastReceiver getBluetoothGuard(BillingSystemApplication billingSystemApplication)
     {
+       final  BillingSystemApplication billingSystemApplicationFinal = billingSystemApplication;
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
             @Override
@@ -33,6 +37,7 @@ public class BluetoothHelper
                             break;
                         case BluetoothAdapter.STATE_TURNING_OFF:
                             Log.e("GUTEN TAG", "BLUETOOTH WIRD GERADE ABGESCHALTET");
+                            billingSystemApplicationFinal.reactToBluetoothTurnedOff();
                     }
                 }
             }

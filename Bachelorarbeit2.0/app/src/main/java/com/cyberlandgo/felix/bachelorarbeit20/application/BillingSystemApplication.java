@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.BluetoothHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.DialogHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
@@ -113,8 +114,15 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //Der BluetoothGuard ist ein BroadcastReceiver, der
         //darauf reagiert, ob Bluetooth abgeschaltet wird
-        bluetoothGuard = BluetoothHelper.getBluetoothGuard();
+        bluetoothGuard = BluetoothHelper.getBluetoothGuard(this);
 
+        if (Preferences.getBooleanIsBluetoothGuardActive())
+        {
+            IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(bluetoothGuard, filter);
+        }
+
+        reactToBluetoothTurnedOff();
     }
 
 
@@ -461,10 +469,24 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         }
 
+
     }
 
 
 
+    public void reactToBluetoothTurnedOff()
+    {
+        if (monitoringActivity != null)
+        {
+            monitoringActivity.showBluetoothGuardDialog();
+
+        }
+        else if (monitoringActivity==null)
+        {
+
+
+        }
+    }
 
 
 

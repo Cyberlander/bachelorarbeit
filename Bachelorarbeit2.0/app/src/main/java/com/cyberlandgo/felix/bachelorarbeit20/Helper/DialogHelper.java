@@ -56,11 +56,8 @@ public class DialogHelper
     public static AlertDialog getBluetoothGuardDialog(Context context)
     {android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Ticket bezahlen");
-        String strecke = TicketDetailHelper.getLineLengthForAmountOfStations();
-        String preis = TicketDetailHelper.getPriceForLineLength(strecke);
 
-        String content = "Strecke: " + strecke + "\n" + "Preis: " + preis;
-        builder.setMessage(content);
+        builder.setMessage("sup");
 
 
         builder.setPositiveButton("Bluetooth einschalten",
