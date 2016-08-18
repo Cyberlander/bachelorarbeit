@@ -161,6 +161,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             //wenn das Bluetooth abgeschaltet wird
             IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(bluetoothGuard, filter);
+            Preferences.saveBooleanIsBluetoothGuardActive(true);
 
             //speichern von Startstation,Datum und Zeit
             //sowie vom Status, der je nach Major variiert
@@ -448,6 +449,15 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         {
             Log.e("Neuer Status: ",StateMachine.getStatusNameForStatusInteger(Preferences.getStatusStateMachine()));
             currentStatusStateMachine = Preferences.getStatusStateMachine();
+
+        }
+        if (key.equals("keyBooleanIsBluetoothGuardActive"))
+        {
+            if (!Preferences.getBooleanIsBluetoothGuardActive())
+            {
+                unregisterReceiver(bluetoothGuard);
+            }
+
 
         }
 

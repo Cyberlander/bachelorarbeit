@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.DialogHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
@@ -192,6 +193,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             Preferences.saveStartTime("");
             Preferences.saveCurrentTargetStation("");
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
+            Preferences.saveBooleanIsBluetoothGuardActive(false);
         }
     }
 
@@ -236,41 +238,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
 
 
-    private void showPayDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Ticket bezahlen");
-        String strecke = TicketDetailHelper.getLineLengthForAmountOfStations();
-        String preis = TicketDetailHelper.getPriceForLineLength(strecke);
-
-        String content = "Strecke: " + strecke + "\n" + "Preis: " + preis;
-        builder.setMessage(content);
-
-
-        builder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        payTicketResetPreferences();
-                    }
-                });
-
-        builder.setNegativeButton("Abbrechen",
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-
-                    }
-                }
-        );
-
-
-
-        AlertDialog dialog = builder.create();
-        // display dialog
-        dialog.show();
+    private void showPayDialog()
+    {
+        DialogHelper.getPayDialog(getContext(),this).show();
     }
 
 }

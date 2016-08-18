@@ -1,5 +1,6 @@
 package com.cyberlandgo.felix.bachelorarbeit20.Helper;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,4 +40,6 @@ public class BluetoothHelper
 
         return broadcastReceiver;
     }
+
+
 }
