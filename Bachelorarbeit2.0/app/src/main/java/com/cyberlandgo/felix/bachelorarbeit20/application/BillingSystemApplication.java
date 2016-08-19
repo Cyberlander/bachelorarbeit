@@ -9,11 +9,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.cyberlandgo.felix.bachelorarbeit20.Helper.BluetoothHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.BluetoothGuard;
+import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.DateChangedReceiver;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
-import com.cyberlandgo.felix.bachelorarbeit20.Helper.DialogHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
@@ -66,6 +65,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
     BroadcastReceiver bluetoothGuard;
 
+    //dieser Receiver lauscht, ob sich das Datum geändert hat
+    BroadcastReceiver dateChangedBroadcastReceiver;
+
 
     @Override
     public void onCreate()
@@ -114,7 +116,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //Der BluetoothGuard ist ein BroadcastReceiver, der
         //darauf reagiert, ob Bluetooth abgeschaltet wird
-        bluetoothGuard = BluetoothHelper.getBluetoothGuard(this);
+        bluetoothGuard = BluetoothGuard.getBluetoothGuard(this);
 
         if (Preferences.getBooleanIsBluetoothGuardActive())
         {
@@ -123,6 +125,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
 
         reactToBluetoothTurnedOff();
+
+
+
+
+        dateChangedBroadcastReceiver = DateChangedReceiver.getDateChangedBroadcastReceiver(this);
+        IntentFilter filterDateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
+        registerReceiver(dateChangedBroadcastReceiver, filterDateChanged);
     }
 
 
@@ -233,12 +242,10 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
             if (currentMajorIdentifierString.equals(Values.MAJOR_ID_BUS))
             {
-
-
+                saveCurrentEndDataOnEnterTargetRegionBus(currentMinorIdentifierString);
             }
             else if (currentMajorIdentifierString.equals(Values.MAJOR_ID_TRAIN))
             {
-                Log.e("und","jetzt wird wieder eine Train-Station betreten");
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
             }
         }
@@ -259,6 +266,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     @Override
     public void didExitRegion(Region region)
     {
+        Log.e("Eine Region", "wurde verlassen");
         if (currentStatusStateMachine==StateMachine.STATUS_START_REGION_TRAIN)
         {
             Log.e("Nachricht:", "Wechsel vom Status start_region_train zu between");
@@ -493,7 +501,26 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
     }
 
-
+    /**
+     * Zwecks Context-Awareness soll das Ticket automatisch
+     * bezahlt werden, wenn ein neuer Tag angebrochen ist
+     */
+    public void payTicketApplication()
+    {
+        if (Preferences.getBooleanHasToPayTicket()==true)
+        {
+            //Zurücksetzen sämtlicher Werte
+            Preferences.saveBooleanHasToPayTicket(false);
+            Preferences.saveCurrentAmountOfStations(0);
+            Preferences.saveCurrentStartstation("");
+            Preferences.saveStartStation("");
+            Preferences.saveStartDate("");
+            Preferences.saveStartTime("");
+            Preferences.saveCurrentTargetStation("");
+            Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
+            Preferences.saveBooleanIsBluetoothGuardActive(false);
+        }
+    }
 
 
 }

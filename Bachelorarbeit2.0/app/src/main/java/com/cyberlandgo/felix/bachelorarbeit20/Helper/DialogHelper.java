@@ -91,6 +91,42 @@ public class DialogHelper
     }
 
 
+    public static AlertDialog getBeaconDetectedDialog(Context context)
+    {android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+        builder.setTitle("Bluetooth wurde deaktiviert! :(");
+
+        builder.setMessage("Während des Abrechnungsvorgangs wurde Bluetooth deaktiviert. Bitte " +
+                "wieder einschalten, damit die App funktioniert!");
+
+
+        builder.setPositiveButton("Bluetooth einschalten",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        BluetoothAdapter.getDefaultAdapter().enable();
+
+                    }
+                });
+
+        builder.setNegativeButton("Abbrechen",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+
+
+
+        android.support.v7.app.AlertDialog dialog = builder.create();
+
+        return dialog;
+    }
 
 
 }
