@@ -55,9 +55,10 @@ public class DialogHelper
 
     public static AlertDialog getBluetoothGuardDialog(Context context)
     {android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
-        builder.setTitle("Ticket bezahlen");
+        builder.setTitle("Bluetooth wurde deaktiviert! :(");
 
-        builder.setMessage("sup");
+        builder.setMessage("Während des Abrechnungsvorgangs wurde Bluetooth deaktiviert. Bitte " +
+                "wieder einschalten, damit die App funktioniert!");
 
 
         builder.setPositiveButton("Bluetooth einschalten",

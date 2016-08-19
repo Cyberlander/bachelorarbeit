@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showBluetoothGuardDialog()
     {
-        Log.e("MainActivity hier", "Dialog wird gezeigt");  
+        Log.e("MainActivity hier", "Dialog wird gezeigt");
         DialogHelper.getBluetoothGuardDialog(this).show();
     }
 

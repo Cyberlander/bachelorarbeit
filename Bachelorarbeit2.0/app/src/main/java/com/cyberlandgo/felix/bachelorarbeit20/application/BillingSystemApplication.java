@@ -208,11 +208,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         else if (currentStatusStateMachine == StateMachine.STATUS_END_REGION_TRAIN)
         {
             //ist es eine Train-Region?
-            if (currentMajorIdentifierString.equals("10000"))
+            if (currentMajorIdentifierString.equals(Values.MAJOR_ID_TRAIN))
             {
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
             }
-            else if (currentMajorIdentifierString.equals("11111"))
+            else if (currentMajorIdentifierString.equals(Values.MAJOR_ID_BUS))
             {
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
             }
@@ -226,14 +226,19 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             saveCurrentEndDataOnEnterTargetRegionBus(currentMinorIdentifierString);
         }
 
+
         else if (currentStatusStateMachine == StateMachine.STATUS_END_REGION_BUS)
         {
-            if (currentMajorIdentifier.equals(Values.MAJOR_ID_BUS))
+
+
+            if (currentMajorIdentifierString.equals(Values.MAJOR_ID_BUS))
             {
 
+
             }
-            else if (currentMajorIdentifier.equals(Values.MAJOR_ID_TRAIN))
+            else if (currentMajorIdentifierString.equals(Values.MAJOR_ID_TRAIN))
             {
+                Log.e("und","jetzt wird wieder eine Train-Station betreten");
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
             }
         }
