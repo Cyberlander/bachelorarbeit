@@ -3,6 +3,9 @@ package com.cyberlandgo.felix.bachelorarbeit20.Helper;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Felix on 16.08.2016.
  */
@@ -48,4 +51,14 @@ public class TicketDetailHelper
         return resultString;
     }
 
+
+    public static String getLineForMinorID(String minor)
+    {
+        String substring = minor.substring(0,3);
+        Map<String,String> minorLineMap = new HashMap<>();
+        minorLineMap.put("200","U2");
+        minorLineMap.put("281","281er");
+
+        return minorLineMap.get(substring);
+    }
 }

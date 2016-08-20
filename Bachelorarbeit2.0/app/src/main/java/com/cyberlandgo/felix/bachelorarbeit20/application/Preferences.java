@@ -15,10 +15,12 @@ public class Preferences
     private static Preferences INSTANCE;
     private static Context mContext;
     public static final String keyStartStation = "keyStartStation";
+    public static final String keySecondStartStation = "keySecondStartStation";
     public static final String keyStatusStateMachine = "keyStatusStateMachine";
     public static final String keyStartDate = "keyStartDate";
     public static final String keyStartTime = "keyStartTime";
     public static final String keyTargetStation = "keyTargetStation";
+    public static final String keyCurrentMinorIDTargetStation = "keyCurrentMinorIDTargetStation";
     public static final String keyBooleanHasToPayTicket = "keyBooleanHasToPayTicket";
     public static final String keyBooleanIsBluetoothGuardActive = "keyBooleanIsBluetoothGuardActive";
 
@@ -30,6 +32,7 @@ public class Preferences
 
 
     public static final String keyBooleanDetailedViewTextfieldStartstation = "keyBooleanDetailedViewTextfieldStartstation";
+    public static final String keyBooleanDetailedViewTextfieldTargetstation = "keyBooleanDetailedViewTextfieldTargetstation";
     public static final String keysaveCurrentStartstation = "keysaveCurrentStartstation";
 
 
@@ -54,6 +57,23 @@ public class Preferences
     {
         return readSharedSetting(mContext, keyStartStation);
     }
+
+
+
+
+    //Startstation 2 usw
+    //wenn vom Status end train in between train gewechselt wird,
+    //dann ändert sich auch die Startstation für die Berechnung (Amount of Stations)
+    public static void saveSecondStartStation(String startstation)
+    {
+        saveSharedSetting(mContext, keySecondStartStation, startstation);
+    }
+
+    public static String getSecondStartStation()
+    {
+        return readSharedSetting(mContext, keySecondStartStation);
+    }
+
 
 
 
@@ -104,6 +124,16 @@ public class Preferences
         return readSharedSetting(mContext, keyTargetStation);
     }
 
+    //akutelle Minor-ID der Endstation
+    public static void saveCurrentMinorIDTargetStation(String target)
+    {
+        saveSharedSetting(mContext, keyCurrentMinorIDTargetStation, target);
+    }
+
+    public static String getCurrentMinorIDTargetStation()
+    {
+        return readSharedSetting(mContext, keyCurrentMinorIDTargetStation);
+    }
 
     //Menge der Stationen
     public static void saveCurrentAmountOfStations(int amount)
@@ -141,6 +171,25 @@ public class Preferences
     {
         return readSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldStartstation);
     }
+
+
+
+    //Boolean für Ansicht des Endstation-Textfeldes
+    public static void saveBooleanDetailedViewTextfieldTargetstation(boolean value)
+    {
+        saveSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldTargetstation, value);
+    }
+
+    public static boolean getBooleanDetailedViewTextfieldTargetstation()
+    {
+        return readSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldTargetstation);
+    }
+
+
+
+
+
+
 
 
     //Boolean Bluetooth Guard

@@ -15,6 +15,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.DateChangedRecei
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
@@ -128,10 +129,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
 
-
         dateChangedBroadcastReceiver = DateChangedReceiver.getDateChangedBroadcastReceiver(this);
         IntentFilter filterDateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
         registerReceiver(dateChangedBroadcastReceiver, filterDateChanged);
+
+
     }
 
 
@@ -220,7 +222,14 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             if (currentMajorIdentifierString.equals(Values.MAJOR_ID_TRAIN))
             {
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_BETWEEN_REGIONS_TRAIN);
+
+                //todo
+                // speichern der zweiten usw. Startstation, damit die Berechnung der Menge
+                //der Stationen exakt erfolgt
+                Preferences.saveSecondStartStation(minorStationMap.get(currentMinorIdentifierString));
             }
+
+
             else if (currentMajorIdentifierString.equals(Values.MAJOR_ID_BUS))
             {
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
@@ -415,16 +424,31 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //holt sich von der Map die zur Minor-ID zugehörige Zielstation
         String targetStation = minorStationMap.get(minorNumber);
         Preferences.saveCurrentTargetStation(targetStation);
+        Preferences.saveCurrentMinorIDTargetStation(minorNumber);
         Preferences.saveStatusStateMachine(StateMachine.STATUS_END_REGION_TRAIN);
 
         //Menge der zurückgelegten Stationen ausrechnen
-        int positionStartStation = StationDistanceHelper.getPositionForName(Preferences.getStartStation());
+        //Wenn das wirklich die erste Startstation noch die Startstation ist
+        int positionStartStation = 0;
+        if (Preferences.getSecondStartStation().equals(""))
+        {
+            positionStartStation = StationDistanceHelper.getPositionForName(Preferences.getStartStation());
+        }
+
+        //wenn der Train-Automat schon einmal durchlaufen wurde und eine weitere
+        //Startstation betreten wurde
+        else if (!Preferences.getSecondStartStation().equals(""))
+        {
+            positionStartStation = StationDistanceHelper.getPositionForName(Preferences.getSecondStartStation());
+        }
+
         int positionEndStation = StationDistanceHelper.getPositionForName(Preferences.getCurrentTargetStation());
         int newAmountStations = Math.abs(positionStartStation - positionEndStation);
 
         int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
         int amountOfStation = oldAmountOfStation + newAmountStations;
 
+        //todo
         Log.e("OLDDDDDDDDD", ""+ oldAmountOfStation);
         Log.e("NEEEEEEEEEW",""+ amountOfStation);
         //Menge der zurückgelegten Stationen speichern
@@ -443,6 +467,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     {
         String targetStation = minorStationMap.get(minorNumber);
         Preferences.saveCurrentTargetStation(targetStation);
+        Preferences.saveCurrentMinorIDTargetStation(minorNumber);
         Preferences.saveStatusStateMachine(StateMachine.STATUS_END_REGION_BUS);
 
         int oldAmountOfStation = Preferences.getCurrentAmountOfStations();
@@ -514,6 +539,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Preferences.saveCurrentAmountOfStations(0);
             Preferences.saveCurrentStartstation("");
             Preferences.saveStartStation("");
+            Preferences.saveSecondStartStation("");
             Preferences.saveStartDate("");
             Preferences.saveStartTime("");
             Preferences.saveCurrentTargetStation("");

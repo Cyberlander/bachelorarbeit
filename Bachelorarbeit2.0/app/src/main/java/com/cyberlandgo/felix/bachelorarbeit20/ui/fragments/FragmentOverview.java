@@ -88,6 +88,14 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             }
         });
 
+        textViewTargetStation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                changeTargetStationDetails();
+            }
+        });
+
         textViewPayTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,13 +149,28 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         {
             textViewTargetStation.setText("Keine Endstation");
         }
-        else if (!Preferences.getCurrentTargetStation().equals(""))
+        else if (!Preferences.getCurrentTargetStation().equals("") && !Preferences.getBooleanDetailedViewTextfieldTargetstation())
         {
-            String resultTextStart = Preferences.getCurrentTargetStation() + "\n Endstation";
+            String resultTextStart = Preferences.getCurrentTargetStation();
             SpannableString ss1=  new SpannableString(resultTextStart);
             ss1.setSpan(new RelativeSizeSpan(1.617f), 0,Preferences.getCurrentTargetStation().length(), 0);
             textViewTargetStation.setText(ss1);
         }
+        else if (!Preferences.getCurrentTargetStation().equals("") && Preferences.getBooleanDetailedViewTextfieldTargetstation())
+        {
+            String endstationString = "Endstation";
+
+            String targetStation = Preferences.getCurrentTargetStation();
+            //todo
+            String line = TicketDetailHelper.getLineForMinorID(Preferences.getCurrentMinorIDTargetStation());
+
+            String resultTextStart = endstationString + "\n" +  targetStation + "\n" + line;
+
+            textViewTargetStation.setText(resultTextStart);
+
+        }
+
+
 
 
         if (Preferences.getBooleanHasToPayTicket()==true)
@@ -174,6 +197,14 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         updateUI();
     }
 
+    public void changeTargetStationDetails()
+    {
+        boolean detailAnsicht = Preferences.getBooleanDetailedViewTextfieldTargetstation();
+        detailAnsicht = !detailAnsicht;
+        Preferences.saveBooleanDetailedViewTextfieldTargetstation(detailAnsicht);
+        updateUI();
+    }
+
 
     /**
      * Diese Methode setzt alle Preferences in ihren Anfangszustand, d.h. auch
@@ -189,6 +220,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             Preferences.saveCurrentAmountOfStations(0);
             Preferences.saveCurrentStartstation("");
             Preferences.saveStartStation("");
+            Preferences.saveSecondStartStation("");
             Preferences.saveStartDate("");
             Preferences.saveStartTime("");
             Preferences.saveCurrentTargetStation("");
