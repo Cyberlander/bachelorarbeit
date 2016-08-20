@@ -1,6 +1,8 @@
 package com.cyberlandgo.felix.bachelorarbeit20.application;
 
 import android.app.Application;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.BluetoothGuard;
@@ -16,6 +20,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
@@ -134,6 +139,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         registerReceiver(dateChangedBroadcastReceiver, filterDateChanged);
 
 
+
     }
 
 
@@ -195,9 +201,12 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             }
             else if (monitoringActivity==null)
             {
+                showNotificationBeaconDetectedStartBilling();
+                /*
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.startActivity(intent);
+                */
 
             }
 
@@ -549,4 +558,36 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     }
 
 
+
+
+
+    public void showNotificationBeaconDetectedStartBilling()
+    {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        int notifyID = 1;
+
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        stackBuilder.addParentStack(MainActivity.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotificationManager.notify(notifyID, mBuilder.build());
+    }
 }
