@@ -130,7 +130,6 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             registerReceiver(bluetoothGuard, filter);
         }
 
-        reactToBluetoothTurnedOff();
 
 
 
@@ -201,7 +200,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             }
             else if (monitoringActivity==null)
             {
-                showNotificationBeaconDetectedStartBilling();
+                showNotification("Haltestelle betreten!","Abrechnung starten?");
+
                 /*
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -530,8 +530,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
         else if (monitoringActivity==null)
         {
-
-
+            showNotification("Bluetooth wurde deaktivert!","Bitte wieder einschalten!");
         }
     }
 
@@ -561,13 +560,15 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
 
-    public void showNotificationBeaconDetectedStartBilling()
+    public void showNotification(String title,String text)
     {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
+                        .setContentTitle(title)
+                        .setContentText(text)
+                        .setAutoCancel(true);
+
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
         int notifyID = 1;
