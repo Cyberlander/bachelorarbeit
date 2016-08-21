@@ -52,5 +52,7 @@ public class LogServerModel extends Observable
 		setChanged();
 		notifyObservers(this);
 	}
+	
+	
 
 }

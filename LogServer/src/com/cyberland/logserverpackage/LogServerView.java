@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerListModel;
@@ -37,6 +38,7 @@ public class LogServerView extends JFrame implements Observer
 	
 	JComboBox _chooseCustomerJComboBox;
 	
+	JScrollPane _scrollPaneTable;
 	JTable _logTable;
 	
 	String[] _columnNames = {"Zeit","Haltestelle"};
@@ -83,8 +85,11 @@ public class LogServerView extends JFrame implements Observer
 		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		
-		_logTable = new JTable(data, _columnNames);
 		
+		
+		_logTable = new JTable(data, _columnNames);
+		_scrollPaneTable = new JScrollPane(_logTable);
+		_logTable.setFillsViewportHeight(true);
 		
 		
 		//Hinzufügen von UI-Elementen zu den Paneln
@@ -94,7 +99,7 @@ public class LogServerView extends JFrame implements Observer
 		//Customer Panel
 		_chooseCustomerPanel.add(_chooseCustomerJComboBox);
 		
-		_mainContainer.add(_logTable, BorderLayout.CENTER);
+		_mainContainer.add(_scrollPaneTable, BorderLayout.CENTER);
 		
 		//Panel-Hierarchie
 		_mainContainer.add(_serverControlPanel,BorderLayout.NORTH);
