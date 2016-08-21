@@ -112,26 +112,42 @@ public class LogServerModel extends Observable
 	
 	public void startServer()
 	{
-		try
-    	{
-        	_serverSocket = new ServerSocket(6666, 100, InetAddress.getByName("0.0.0.0"));
-        	
-        	_listening = true;
-        	System.out.println("Server listening on Port 6666");
-        	
-        	while (_listening)
-        	{
-        		new RequestHandler(_serverSocket.accept()).start();
-        	}
-        	_serverSocket.close();
-        	
-    	}
-    	catch (IOException e)
-    	{	
+		Thread thread = new Thread(new ServerRunnable());
+		thread.start();
 
-    	}
-	
 	}
+	
+	
+	
+	
+	private class ServerRunnable implements Runnable
+    {
+        @Override
+        public void run()
+        {
+        	try
+        	{
+            	_serverSocket = new ServerSocket(6666, 100, InetAddress.getByName("0.0.0.0"));
+            	
+            	_listening = true;
+            	System.out.println("Server listening on Port 6666");
+            	
+            	while (_listening)
+            	{
+            		new RequestHandler(_serverSocket.accept()).start();
+            	}
+            	_serverSocket.close();
+            	
+        	}
+        	catch (IOException e)
+        	{	
+
+        	}
+
+
+        }
+
+    }
 	
 
 }
