@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.SpinnerListModel;
 
 
@@ -22,6 +23,7 @@ public class LogServerView extends JFrame implements Observer
 {
 	LogServerModel model;
 	
+	Container _mainContainer;
 	JPanel _masterPanel;
 	JPanel _serverControlPanel;
 	JPanel _logPanel;
@@ -35,6 +37,14 @@ public class LogServerView extends JFrame implements Observer
 	
 	JComboBox _chooseCustomerJComboBox;
 	
+	JTable _logTable;
+	
+	String[] _columnNames = {"Zeit","Haltestelle"};
+	
+	//defaultData for Table
+	Object[][] data = {
+		    {"4:20", "Out of Mind"}};
+	
 	public LogServerView(LogServerController controller)
 	{
 		//todo
@@ -45,7 +55,9 @@ public class LogServerView extends JFrame implements Observer
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		Container content = getContentPane();
+		
+		
+		_mainContainer = getContentPane();
 		
 		//Panel für die die Server-Kontrolle
 		_serverControlPanel = new JPanel();
@@ -71,6 +83,10 @@ public class LogServerView extends JFrame implements Observer
 		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		
+		_logTable = new JTable(data, _columnNames);
+		
+		
+		
 		//Hinzufügen von UI-Elementen zu den Paneln
 		//Server Kontrolle
 		_serverControlPanel.add(_startStopServerButton);
@@ -78,11 +94,12 @@ public class LogServerView extends JFrame implements Observer
 		//Customer Panel
 		_chooseCustomerPanel.add(_chooseCustomerJComboBox);
 		
+		_mainContainer.add(_logTable, BorderLayout.CENTER);
 		
 		//Panel-Hierarchie
-		content.add(_serverControlPanel,BorderLayout.NORTH);
-		content.add(_chooseCustomerPanel,BorderLayout.WEST);
-
+		_mainContainer.add(_serverControlPanel,BorderLayout.NORTH);
+		_mainContainer.add(_chooseCustomerPanel,BorderLayout.WEST);
+		
 		
 	
 		
