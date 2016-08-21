@@ -18,7 +18,7 @@ public class LogServerController
 		
 		
 		
-		
+		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
 		
 		mView.setVisible(true);
 	}

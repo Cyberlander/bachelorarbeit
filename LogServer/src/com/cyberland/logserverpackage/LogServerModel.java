@@ -12,6 +12,8 @@ public class LogServerModel extends Observable
 	List<String> _customer;
 	String _serverStatus;
 	
+	boolean serverUp;
+	
 	public List<String> getCustomers()
 	{
 		List<String> customerList = new ArrayList<String>();
@@ -53,6 +55,19 @@ public class LogServerModel extends Observable
 		notifyObservers(this);
 	}
 	
+	public void changeServerStatus()
+	{
+		if (_serverStatus.equals("Server not running"))
+		{
+			_serverStatus = "Server running";
+		}
+		else if (_serverStatus.equals("Server running"))
+		{
+			_serverStatus = "Server not running";
+		}
+		setChanged();
+		notifyObservers(this);
+	}
 	
 
 }

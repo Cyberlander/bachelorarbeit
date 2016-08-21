@@ -3,6 +3,7 @@ package com.cyberland.logserverpackage;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -109,6 +110,9 @@ public class LogServerView extends JFrame implements Observer
 	
 		
 	}
+	
+	
+	
 
 	@Override
 	public void update(Observable arg0, Object arg1) 
@@ -127,12 +131,12 @@ public class LogServerView extends JFrame implements Observer
 		DefaultComboBoxModel newComboBoxModel = new DefaultComboBoxModel( customersArray );
 		_chooseCustomerJComboBox.setModel(newComboBoxModel);
 
-
 		
-		
-		
-		
-			
+	}
+	
+	public void addChangeServerStateListener(ActionListener actionListener)
+	{
+		_startStopServerButton.addActionListener(actionListener);		
 	}
 
 }
