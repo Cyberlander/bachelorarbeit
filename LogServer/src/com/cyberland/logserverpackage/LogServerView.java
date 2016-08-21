@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 
 public class LogServerView extends JFrame implements Observer
 {
@@ -23,6 +25,8 @@ public class LogServerView extends JFrame implements Observer
 	
 	JButton _startStopServerButton;
 	JLabel _statusServerLabel;
+	
+	JSpinner _chooseCustomerSpinner;
 	
 	public LogServerView()
 	{
@@ -48,18 +52,27 @@ public class LogServerView extends JFrame implements Observer
 		
 		//initialisieren der UI-Komponenten
 		_startStopServerButton = new JButton("Start Server");
+		_startStopServerButton.setSize(300,50);
+		
 		_statusServerLabel = new JLabel("Server not running");
 		
+		String[] monthStrings = {"customer018375","customer218375","customer318375"}; //get month names
+		SpinnerListModel monthModel = new SpinnerListModel(monthStrings);
+		_chooseCustomerSpinner = new JSpinner(monthModel);
+		
+		
 		//Hinzufügen von UI-Elementen zu den Paneln
+		//Server Kontrolle
 		_serverControlPanel.add(_startStopServerButton);
 		_serverControlPanel.add(_statusServerLabel);
+		//Customer Panel
+		_chooseCustomerPanel.add(_chooseCustomerSpinner);
 		
 		
 		//Panel-Hierarchie
 		content.add(_serverControlPanel,BorderLayout.NORTH);
-		content.add(_chooseCustomerPanel,BorderLayout.EAST);
-		
-		pack();
+		content.add(_chooseCustomerPanel,BorderLayout.WEST);
+
 		
 	
 		
