@@ -127,6 +127,8 @@ public class LogServerView extends JFrame implements Observer
 		String[] customersArray = new String[customersList.size()];
 		customersList.toArray(customersArray);
 
+		//Button
+		_startStopServerButton.setText(model.getTextButtonStartServer());
 
 		DefaultComboBoxModel newComboBoxModel = new DefaultComboBoxModel( customersArray );
 		_chooseCustomerJComboBox.setModel(newComboBoxModel);

@@ -11,6 +11,7 @@ public class LogServerModel extends Observable
 {
 	List<String> _customer;
 	String _serverStatus;
+	public String _buttonTextServerStart;
 	
 	boolean serverUp;
 	
@@ -65,8 +66,40 @@ public class LogServerModel extends Observable
 		{
 			_serverStatus = "Server not running";
 		}
+		changeTextButtonStartServer();
 		setChanged();
 		notifyObservers(this);
+	}
+	
+	
+	
+	public void setTextButtonStartServer(String text)
+	{
+		_buttonTextServerStart = text;
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	public String getTextButtonStartServer()
+	{
+		return this._buttonTextServerStart;
+	}
+	
+	
+	
+	
+	public void changeTextButtonStartServer()
+	{
+		if (_serverStatus.equals("Server not running"))
+		{
+			_buttonTextServerStart = "Start Server";
+		}
+		else if (_serverStatus.equals("Server running"))
+		{
+			_buttonTextServerStart = "Stop Server";
+		}
+		setChanged();
+		notifyObservers(this);	
 	}
 	
 

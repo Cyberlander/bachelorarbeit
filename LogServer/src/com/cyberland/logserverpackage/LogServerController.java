@@ -15,7 +15,7 @@ public class LogServerController
 		
 		mModel.addObserver(mView);
 		mModel.setServerStatus("Server not running");
-		
+		mModel.setTextButtonStartServer("Start Server");
 		
 		
 		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
