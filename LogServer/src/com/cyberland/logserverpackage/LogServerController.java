@@ -14,7 +14,7 @@ public class LogServerController
 		mView = new LogServerView(this);
 		
 		mModel.addObserver(mView);
-		mModel.setServerStatus("Server example");
+		mModel.setServerStatus("Server not running");
 		
 		
 		

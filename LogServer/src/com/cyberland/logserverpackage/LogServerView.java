@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -66,12 +67,7 @@ public class LogServerView extends JFrame implements Observer
 		_statusServerLabel = new JLabel("Server not running");
 		
 		
-		List<String> customersList = model.getCustomers();
-		String[] customersArray = new String[customersList.size()];
-		customersList.toArray(customersArray);
-		
-		
-		_chooseCustomerJComboBox = new JComboBox(customersArray);
+		_chooseCustomerJComboBox = new JComboBox();
 		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		
@@ -98,9 +94,20 @@ public class LogServerView extends JFrame implements Observer
 		LogServerModel model = (LogServerModel) arg0;
 		
 		String serverStatus = model.getServerStatus();
-		System.out.println(serverStatus);
-		
 		_statusServerLabel.setText(serverStatus);
+		
+		//Kundenliste
+		List<String> customersList = model.getCustomers();
+		String[] customersArray = new String[customersList.size()];
+		customersList.toArray(customersArray);
+
+
+		DefaultComboBoxModel newComboBoxModel = new DefaultComboBoxModel( customersArray );
+		_chooseCustomerJComboBox.setModel(newComboBoxModel);
+
+
+		
+		
 		
 		
 			
