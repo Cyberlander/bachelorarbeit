@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,7 +27,8 @@ public class LogServerView extends JFrame implements Observer
 	JButton _startStopServerButton;
 	JLabel _statusServerLabel;
 	
-	JSpinner _chooseCustomerSpinner;
+	
+	JComboBox _chooseCustomerJComboBox;
 	
 	public LogServerView()
 	{
@@ -56,9 +58,9 @@ public class LogServerView extends JFrame implements Observer
 		
 		_statusServerLabel = new JLabel("Server not running");
 		
-		String[] monthStrings = {"customer018375","customer218375","customer318375"}; //get month names
-		SpinnerListModel monthModel = new SpinnerListModel(monthStrings);
-		_chooseCustomerSpinner = new JSpinner(monthModel);
+		String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+		_chooseCustomerJComboBox = new JComboBox(petStrings);
+		_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		
 		//Hinzufügen von UI-Elementen zu den Paneln
@@ -66,7 +68,7 @@ public class LogServerView extends JFrame implements Observer
 		_serverControlPanel.add(_startStopServerButton);
 		_serverControlPanel.add(_statusServerLabel);
 		//Customer Panel
-		_chooseCustomerPanel.add(_chooseCustomerSpinner);
+		_chooseCustomerPanel.add(_chooseCustomerJComboBox);
 		
 		
 		//Panel-Hierarchie
