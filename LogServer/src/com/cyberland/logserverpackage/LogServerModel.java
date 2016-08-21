@@ -3,9 +3,12 @@ package com.cyberland.logserverpackage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+
 
 public class LogServerModel extends Observable 
 {
@@ -14,6 +17,8 @@ public class LogServerModel extends Observable
 	public String _buttonTextServerStart;
 	
 	boolean serverUp;
+	ServerSocket _serverSocket;
+	boolean _listening;
 	
 	public List<String> getCustomers()
 	{
@@ -61,6 +66,7 @@ public class LogServerModel extends Observable
 		if (_serverStatus.equals("Server not running"))
 		{
 			_serverStatus = "Server running";
+			startServer();
 		}
 		else if (_serverStatus.equals("Server running"))
 		{
@@ -88,18 +94,43 @@ public class LogServerModel extends Observable
 	
 	
 	
-	public void changeTextButtonStartServer()
+	public void changeTextButtonStartServer() 
 	{
 		if (_serverStatus.equals("Server not running"))
 		{
 			_buttonTextServerStart = "Start Server";
+			
 		}
 		else if (_serverStatus.equals("Server running"))
 		{
-			_buttonTextServerStart = "Stop Server";
+			_buttonTextServerStart = "Stop Server";	
 		}
 		setChanged();
 		notifyObservers(this);	
+	}
+	
+	
+	public void startServer()
+	{
+		try
+    	{
+        	_serverSocket = new ServerSocket(6666, 100, InetAddress.getByName("0.0.0.0"));
+        	
+        	_listening = true;
+        	System.out.println("Server listening on Port 6666");
+        	
+        	while (_listening)
+        	{
+        		new RequestHandler(_serverSocket.accept()).start();
+        	}
+        	_serverSocket.close();
+        	
+    	}
+    	catch (IOException e)
+    	{	
+
+    	}
+	
 	}
 	
 
