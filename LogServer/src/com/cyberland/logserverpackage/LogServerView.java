@@ -3,6 +3,7 @@ package com.cyberland.logserverpackage;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +18,8 @@ import javax.swing.SpinnerListModel;
 
 public class LogServerView extends JFrame implements Observer
 {
+	LogServerModel model;
+	
 	JPanel _masterPanel;
 	JPanel _serverControlPanel;
 	JPanel _logPanel;
@@ -30,8 +33,11 @@ public class LogServerView extends JFrame implements Observer
 	
 	JComboBox _chooseCustomerJComboBox;
 	
-	public LogServerView()
+	public LogServerView(LogServerController controller)
 	{
+		//todo
+		model = new LogServerModel();
+		
 		setTitle("Log-Server");
 		setSize(650,250);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,9 +64,14 @@ public class LogServerView extends JFrame implements Observer
 		
 		_statusServerLabel = new JLabel("Server not running");
 		
-		String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
-		_chooseCustomerJComboBox = new JComboBox(petStrings);
-		_chooseCustomerJComboBox.setSelectedIndex(0);
+		
+		List<String> customersList = model.getCustomers();
+		String[] customersArray = new String[customersList.size()];
+		customersList.toArray(customersArray);
+		
+		
+		_chooseCustomerJComboBox = new JComboBox(customersArray);
+		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		
 		//Hinzufügen von UI-Elementen zu den Paneln
