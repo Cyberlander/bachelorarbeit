@@ -1,5 +1,5 @@
-Han Solo
-Anakin Skywalker
 Obi-Wan Kenobi
+Yoda
 Darth Maul
 Darth Vader
+Anakin Skywalker

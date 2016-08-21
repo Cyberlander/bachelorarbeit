@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
 
+
 public class LogServerView extends JFrame implements Observer
 {
 	LogServerModel model;
@@ -92,10 +93,17 @@ public class LogServerView extends JFrame implements Observer
 	}
 
 	@Override
-	public void update(Observable o, Object arg)
+	public void update(Observable arg0, Object arg1) 
 	{
-		// TODO Auto-generated method stub
+		LogServerModel model = (LogServerModel) arg0;
 		
+		String serverStatus = model.getServerStatus();
+		System.out.println(serverStatus);
+		
+		_statusServerLabel.setText(serverStatus);
+		
+		
+			
 	}
 
 }

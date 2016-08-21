@@ -10,7 +10,7 @@ import java.util.Observable;
 public class LogServerModel extends Observable 
 {
 	List<String> _customer;
-	
+	String _serverStatus;
 	
 	public List<String> getCustomers()
 	{
@@ -30,7 +30,6 @@ public class LogServerModel extends Observable
 			while ((line = bufferedReader.readLine()) != null)
 			{
 				customerList.add(line);
-				System.out.println(line);
 			}
 			bufferedReader.close();
 		}
@@ -40,6 +39,18 @@ public class LogServerModel extends Observable
 		}
 		
 		return customerList;
+	}
+	
+	public String getServerStatus()
+	{
+		return _serverStatus;
+	}
+	
+	public void setServerStatus(String newStatus)
+	{
+		this._serverStatus = newStatus;
+		setChanged();
+		notifyObservers(this);
 	}
 
 }

@@ -11,8 +11,15 @@ public class LogServerController
 	public LogServerController()
 	{
 		mModel = new LogServerModel();
-		mModel.getCustomers();
 		mView = new LogServerView(this);
+		
+		mModel.addObserver(mView);
+		mModel.setServerStatus("Server example");
+		
+		
+		
+		
+		
 		mView.setVisible(true);
 	}
 
