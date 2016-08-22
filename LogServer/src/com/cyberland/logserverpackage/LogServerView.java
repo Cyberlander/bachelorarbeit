@@ -112,6 +112,10 @@ public class LogServerView extends JFrame implements Observer
 	}
 	
 	
+	public String getSelectedCustomer()
+	{
+		return _chooseCustomerJComboBox.getSelectedItem().toString();
+	}
 	
 
 	@Override
@@ -132,6 +136,8 @@ public class LogServerView extends JFrame implements Observer
 
 		DefaultComboBoxModel newComboBoxModel = new DefaultComboBoxModel( customersArray );
 		_chooseCustomerJComboBox.setModel(newComboBoxModel);
+		
+		_chooseCustomerJComboBox.setSelectedItem(model.getSelectedCustomer());
 
 		
 	}
@@ -139,6 +145,11 @@ public class LogServerView extends JFrame implements Observer
 	public void addChangeServerStateListener(ActionListener actionListener)
 	{
 		_startStopServerButton.addActionListener(actionListener);		
+	}
+	
+	public void addSelectedCustomerListener(ActionListener actionListener)
+	{
+		_chooseCustomerJComboBox.addActionListener(actionListener);
 	}
 
 }

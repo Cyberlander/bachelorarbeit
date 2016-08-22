@@ -20,6 +20,8 @@ public class LogServerModel extends Observable
 	ServerSocket _serverSocket;
 	boolean _listening;
 	
+	String _selectedCustomer;
+	
 	public List<String> getCustomers()
 	{
 		List<String> customerList = new ArrayList<String>();
@@ -158,6 +160,21 @@ public class LogServerModel extends Observable
         }
 
     }
+	
+	
+	
+	public void setSelectedCustomer(String customer)
+	{
+		_selectedCustomer = customer;
+		System.out.println(customer);
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	public String getSelectedCustomer()
+	{
+		return this._selectedCustomer;
+	}
 	
 
 }
