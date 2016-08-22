@@ -1,10 +1,14 @@
 package com.cyberland.logserverpackage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -175,5 +179,24 @@ public class LogServerModel extends Observable
 		return this._selectedCustomer;
 	}
 	
+	
+	
+	
+	public List<String> getLogsForCustomer(String customer)
+	{
+		String filePath = "data/customerlogs/"+customer;
+		Path path = Paths.get(filePath);
+		
+		if (Files.notExists(path))
+		{
+			File dir = new File("data/customerlogs/"+customer);
+			dir.mkdir();
+		}
+		
+		List<String> logs = new ArrayList<>();
+		
+		
+		return logs;	
+	}
 
 }
