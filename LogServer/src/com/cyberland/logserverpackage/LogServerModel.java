@@ -71,6 +71,16 @@ public class LogServerModel extends Observable
 		else if (_serverStatus.equals("Server running"))
 		{
 			_serverStatus = "Server not running";
+			_listening = false;
+			try
+			{
+				_serverSocket.close();
+			}
+			catch (IOException e)
+			{
+				
+			}
+			
 		}
 		changeTextButtonStartServer();
 		setChanged();
