@@ -149,6 +149,16 @@ public class LogServerView extends JFrame implements Observer
 		_chooseCustomerJComboBox.setSelectedItem(model.getSelectedCustomer());
 
 		
+		
+		//Log-Liste für spezifischen Kunden
+		List<String> logList = model.getLogsForCustomer(model.getSelectedCustomer());
+		String[] logArray = new String[logList.size()];
+		logList.toArray(logArray);
+		
+		DefaultComboBoxModel logComboBoxModel = new DefaultComboBoxModel(logArray);
+		_chooseSpecificLogForCustomerJComboBox.setModel(logComboBoxModel);
+		
+		
 	}
 	
 	public void addChangeServerStateListener(ActionListener actionListener)

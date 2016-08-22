@@ -195,6 +195,17 @@ public class LogServerModel extends Observable
 		
 		List<String> logs = new ArrayList<>();
 		
+		File folder = new File("data/customerlogs/"+customer);
+		File[] listOfFiles = folder.listFiles();
+		
+		for (int i=0;i<listOfFiles.length;i++)
+		{
+			if (listOfFiles[i].isFile())
+			{
+				logs.add(listOfFiles[i].getName());
+			}
+		}
+		
 		
 		return logs;	
 	}

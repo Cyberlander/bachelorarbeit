@@ -18,6 +18,8 @@ public class LogServerController
 		mModel.setTextButtonStartServer("Start Server");
 		mModel.setSelectedCustomer("Felix Fröhlich");
 		
+	
+		
 		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
 		mView.addSelectedCustomerListener(e -> mModel.setSelectedCustomer(mView.getSelectedCustomer()));
 		
