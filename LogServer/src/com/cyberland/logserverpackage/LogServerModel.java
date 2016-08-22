@@ -166,7 +166,6 @@ public class LogServerModel extends Observable
 	public void setSelectedCustomer(String customer)
 	{
 		_selectedCustomer = customer;
-		System.out.println(customer);
 		setChanged();
 		notifyObservers(this);
 	}

@@ -3,11 +3,13 @@ package com.cyberland.logserverpackage;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -31,13 +33,15 @@ public class LogServerView extends JFrame implements Observer
 	JPanel _logPanel;
 	JPanel _chooseCustomerPanel;
 	BoxLayout _boxlayoutServerControlPanel;
-	BoxLayout _boxlayoutChooseCustomerPanel;
+	GridLayout _gridLayoutChooseCustomerPanel;
 	
 	JButton _startStopServerButton;
 	JLabel _statusServerLabel;
 	
 	
 	JComboBox _chooseCustomerJComboBox;
+	JComboBox _chooseSpecificLogForCustomerJComboBox;
+	
 	
 	JScrollPane _scrollPaneTable;
 	JTable _logTable;
@@ -66,13 +70,14 @@ public class LogServerView extends JFrame implements Observer
 		_serverControlPanel = new JPanel();
 		
 		//Panel für die Auswahl der Kunden
-		_chooseCustomerPanel = new JPanel();
+		_chooseCustomerPanel = new JPanel(new GridLayout(5,1));
 		
 		//Log-Panel
 		_logPanel = new JPanel();
 		
 		_boxlayoutServerControlPanel = new BoxLayout(_serverControlPanel,BoxLayout.X_AXIS);
-		_boxlayoutChooseCustomerPanel = new BoxLayout(_chooseCustomerPanel,BoxLayout.Y_AXIS);
+		
+		
 		
 		
 		//initialisieren der UI-Komponenten
@@ -85,6 +90,7 @@ public class LogServerView extends JFrame implements Observer
 		_chooseCustomerJComboBox = new JComboBox();
 		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
+		_chooseSpecificLogForCustomerJComboBox = new JComboBox();
 		
 		
 		
@@ -99,6 +105,9 @@ public class LogServerView extends JFrame implements Observer
 		_serverControlPanel.add(_statusServerLabel);
 		//Customer Panel
 		_chooseCustomerPanel.add(_chooseCustomerJComboBox);
+		_chooseCustomerPanel.add(_chooseSpecificLogForCustomerJComboBox);
+		
+		
 		
 		_mainContainer.add(_scrollPaneTable, BorderLayout.CENTER);
 		
