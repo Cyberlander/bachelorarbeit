@@ -24,7 +24,8 @@ public class LogServerController
 	
 		
 		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
-		mView.addSelectedCustomerListener(e -> mModel.setSelectedCustomer(mView.getSelectedCustomer()));
+		mView.addSelectedCustomerListener(e -> {mModel.setSelectedCustomer(mView.getSelectedCustomer());
+		 mModel.setSelectedLog(mView.getSelectedLog());});
 		mView.addSelectedLogListener(e -> mModel.setSelectedLog(mView.getSelectedLog()));
 		
 		mView.setVisible(true);
