@@ -41,6 +41,8 @@ public class LogServerView extends JFrame implements Observer
 	
 	JComboBox _chooseCustomerJComboBox;
 	JComboBox _chooseSpecificLogForCustomerJComboBox;
+	JButton _newLogButton;
+	
 	
 	
 	JScrollPane _scrollPaneTable;
@@ -91,6 +93,7 @@ public class LogServerView extends JFrame implements Observer
 		//_chooseCustomerJComboBox.setSelectedIndex(0);
 		
 		_chooseSpecificLogForCustomerJComboBox = new JComboBox();
+		_newLogButton = new JButton("New Log");
 		
 		
 		
@@ -106,6 +109,7 @@ public class LogServerView extends JFrame implements Observer
 		//Customer Panel
 		_chooseCustomerPanel.add(_chooseCustomerJComboBox);
 		_chooseCustomerPanel.add(_chooseSpecificLogForCustomerJComboBox);
+		_chooseCustomerPanel.add(_newLogButton);
 		
 		
 		
@@ -124,6 +128,11 @@ public class LogServerView extends JFrame implements Observer
 	public String getSelectedCustomer()
 	{
 		return _chooseCustomerJComboBox.getSelectedItem().toString();
+	}
+	
+	public String getSelectedLog()
+	{
+		return _chooseSpecificLogForCustomerJComboBox.getSelectedItem().toString();
 	}
 	
 
@@ -158,6 +167,8 @@ public class LogServerView extends JFrame implements Observer
 		DefaultComboBoxModel logComboBoxModel = new DefaultComboBoxModel(logArray);
 		_chooseSpecificLogForCustomerJComboBox.setModel(logComboBoxModel);
 		
+		_chooseSpecificLogForCustomerJComboBox.setSelectedItem(model.getSelectedLog());
+		
 		
 	}
 	
@@ -171,4 +182,8 @@ public class LogServerView extends JFrame implements Observer
 		_chooseCustomerJComboBox.addActionListener(actionListener);
 	}
 
+	public void addSelectedLogListener(ActionListener actionListener)
+	{
+		_chooseSpecificLogForCustomerJComboBox.addActionListener(actionListener);
+	}
 }

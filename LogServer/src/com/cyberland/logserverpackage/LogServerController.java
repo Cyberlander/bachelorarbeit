@@ -16,12 +16,14 @@ public class LogServerController
 		mModel.addObserver(mView);
 		mModel.setServerStatus("Server not running");
 		mModel.setTextButtonStartServer("Start Server");
-		mModel.setSelectedCustomer("Felix Fröhlich");
+		mModel.setSelectedCustomer(mModel.getCustomers().get(0));
+		mModel.setSelectedLog(mModel.getLogsForCustomer(mModel.getSelectedCustomer()).get(0));
 		
 	
 		
 		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
 		mView.addSelectedCustomerListener(e -> mModel.setSelectedCustomer(mView.getSelectedCustomer()));
+		mView.addSelectedLogListener(e -> mModel.setSelectedLog(mView.getSelectedLog()));
 		
 		mView.setVisible(true);
 	}

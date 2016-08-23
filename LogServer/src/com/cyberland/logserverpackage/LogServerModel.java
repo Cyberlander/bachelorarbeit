@@ -25,6 +25,7 @@ public class LogServerModel extends Observable
 	boolean _listening;
 	
 	String _selectedCustomer;
+	String _selectedLog;
 	
 	public List<String> getCustomers()
 	{
@@ -208,6 +209,19 @@ public class LogServerModel extends Observable
 		
 		
 		return logs;	
+	}
+	
+	public void setSelectedLog(String log)
+	{
+		this._selectedLog = log;
+		System.out.println(_selectedLog);
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	public String getSelectedLog()
+	{
+		return this._selectedLog;
 	}
 
 }
