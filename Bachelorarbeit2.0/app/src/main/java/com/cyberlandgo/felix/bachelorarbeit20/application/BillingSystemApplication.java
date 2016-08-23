@@ -472,7 +472,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //ab jetzt kann ein Ticket bezahlt werden
         Preferences.saveBooleanHasToPayTicket(true);
         _subsectionDataSource.createSubsection(TicketDetailHelper.getLineForMinorID(Preferences.getCurrentMinorIDTargetStation()),
-                Preferences.getCurrentTargetStation(),
+                Preferences.getStartStation(),
                 Preferences.getCurrentTargetStation());
 
     }
