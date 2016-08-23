@@ -170,16 +170,16 @@ public class LogServerView extends JFrame implements Observer
 		
 		_chooseSpecificLogForCustomerJComboBox.setSelectedItem(model.getSelectedLog());
 		
-		//ändern des Tabellen-Inhalts
-		try
+
+		
+		
+		//ändern des Tabelleninhalts
+		if ((model.getSelectedCustomer()!=null) && (model.getSelectedLog()!=null))
 		{
 			DefaultTableModel defaultTableModel = model.getTableModelForSelectedLog();
 			_logTable.setModel(defaultTableModel);
 		}
-		catch (NullPointerException e)
-		{
-			
-		}
+
 		
 		
 		

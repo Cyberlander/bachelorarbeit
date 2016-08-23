@@ -231,8 +231,9 @@ public class LogServerModel extends Observable
 	{
 		String customer = getSelectedCustomer();
 		String log = getSelectedLog();
-		String filePath2 = "data/customerlogs/"+customer + "/" + log;
-		String filePath = "data/customerlogs/Felix Fröhlich/log1.txt";
+		
+		String filePath = "data/customerlogs/"+customer + "/" + log;
+		String filePath2 = "data/customerlogs/Felix Fröhlich/log1.txt";
 		System.out.println(filePath);
 		String line = null;
 		List<String> logEntries = new ArrayList<String>();
@@ -247,7 +248,6 @@ public class LogServerModel extends Observable
 			while ((line = bufferedReader.readLine()) != null)
 			{
 				logEntries.add(line);
-				System.out.println(line);
 			}
 			bufferedReader.close();
 		}
