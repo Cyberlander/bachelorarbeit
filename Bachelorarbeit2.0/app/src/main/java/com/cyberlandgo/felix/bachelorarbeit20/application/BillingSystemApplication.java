@@ -22,6 +22,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
 
@@ -74,6 +75,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     //dieser Receiver lauscht, ob sich das Datum geändert hat
     BroadcastReceiver dateChangedBroadcastReceiver;
 
+
+    //Datasource für die Teilstrecken
+    SubsectionDataSource _subsectionDataSource;
 
     @Override
     public void onCreate()
@@ -137,8 +141,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         IntentFilter filterDateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
         registerReceiver(dateChangedBroadcastReceiver, filterDateChanged);
 
-
-
+        //instanziieren der Schnittstelle zur Teilstrecken-Tabelle
+        _subsectionDataSource = new SubsectionDataSource(this);
+        _subsectionDataSource.open();
     }
 
 
@@ -466,6 +471,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //ab jetzt kann ein Ticket bezahlt werden
         Preferences.saveBooleanHasToPayTicket(true);
+        _subsectionDataSource.createSubsection(TicketDetailHelper.getLineForMinorID(Preferences.getCurrentMinorIDTargetStation()),
+                Preferences.getCurrentTargetStation(),
+                Preferences.getCurrentTargetStation());
 
     }
 
