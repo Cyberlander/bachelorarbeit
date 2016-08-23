@@ -152,23 +152,5 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 dbase.insert(TABLE_STATIONS,null,values);
         }
 
-        public List<Station> getAllStations()
-        {
-                List<Station> listeQ = new ArrayList<Station>();
-                String selectQuery ="SELECT * FROM "+ TABLE_STATIONS;
-                dbase = this.getReadableDatabase();
-                Cursor cursor = dbase.rawQuery(selectQuery,null);
-                if (cursor.moveToFirst())
-                {
-                        do{
-                                Station station = new Station();
-                                station.setId(cursor.getInt(0));
-                                station.setStationName(cursor.getString(1));
-                                station.setMajor(cursor.getString(2));
-                                station.setMinor(cursor.getString(3));
-                                listeQ.add(station);
-                        }while(cursor.moveToNext());
-                }
-                return listeQ;
-        }
+
 }

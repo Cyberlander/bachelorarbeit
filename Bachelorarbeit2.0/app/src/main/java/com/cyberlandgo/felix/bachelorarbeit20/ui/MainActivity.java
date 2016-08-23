@@ -21,6 +21,8 @@ import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.BillingSystemApplication;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
+import com.cyberlandgo.felix.bachelorarbeit20.database.models.Subsection;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentDebug;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
 
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         updateUIonFragmentOverview();
+
+        //todo testen der Subsection Table
+        SubsectionDataSource subsectionDataSource = new SubsectionDataSource(this);
+        subsectionDataSource.open();
+        subsectionDataSource.createSubsection("a","b","c");
+        List<Subsection> list = subsectionDataSource.getAllSubsections();
+        Toast.makeText(this, list.get(0).getLine(),Toast.LENGTH_LONG).show();
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
