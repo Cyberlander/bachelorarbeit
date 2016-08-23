@@ -280,4 +280,9 @@ public class LogServerModel extends Observable
 		//TODO 
 		return tableModel;
 	}
+	
+	public void writeToLogFile()
+	{
+		
+	}
 }
