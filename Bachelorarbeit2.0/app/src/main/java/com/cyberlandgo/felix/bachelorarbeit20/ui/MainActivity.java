@@ -67,13 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         updateUIonFragmentOverview();
-
-        //todo testen der Subsection Table
-        SubsectionDataSource subsectionDataSource = new SubsectionDataSource(this);
-        subsectionDataSource.open();
-        subsectionDataSource.createSubsection("a","b","c");
-        List<Subsection> list = subsectionDataSource.getAllSubsections();
-        Toast.makeText(this, list.get(0).getLine(),Toast.LENGTH_LONG).show();
+        
 
     }
 
