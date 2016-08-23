@@ -5,3 +5,5 @@ Darth Maul
 Darth Vader
 Anakin Skywalker
 R2D2
+C3PO
+Boba Fett

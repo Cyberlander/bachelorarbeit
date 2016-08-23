@@ -12,7 +12,10 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RequestHandler extends Thread
@@ -49,8 +52,7 @@ public class RequestHandler extends Thread
 	{
 		String[] parts = request.split("/");
 		String customerName = parts[0];
-		String time = parts[1];
-		String station = parts[2];
+		String station = parts[1];
 
 		String filePathCustomer = "data/customerlogs/"+customerName;
 		Path path = Paths.get(filePathCustomer);
@@ -94,6 +96,51 @@ public class RequestHandler extends Thread
 
 			}
 		}
+		String date = getDate();
+		
+		//prüfen ob das Log-File mit dem derzeitigen Datum existiert 
+		String pathToLog = "data/customerlogs/"+customerName+"/"+date+".txt";
+		File f = new File(pathToLog);
+		if(f.exists() && !f.isDirectory()) { 
+			try
+			{
+				FileWriter fileWriter = new FileWriter(pathToLog,true);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				PrintWriter printWriter = new PrintWriter(bufferedWriter);
+				printWriter.println();
+				printWriter.write(getTime() + "/" + station);
+				printWriter.close();
+				bufferedWriter.close();
+				fileWriter.close();
+				
+			} 
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else 
+		{
+			try
+			{
+					FileWriter fileWriter = new FileWriter(pathToLog);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					PrintWriter printWriter = new PrintWriter(bufferedWriter);
+					printWriter.write(getTime() + "/" + station);
+					printWriter.close();
+					bufferedWriter.close();
+					fileWriter.close();
+			
+			} 
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 	
 	
@@ -125,6 +172,19 @@ public class RequestHandler extends Thread
 		}
 		
 		return customerList;
+	}
+	
+	public String getDate()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		   Date date = new Date();
+		   return dateFormat.format(date);
+	}
+	public String getTime()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		   Date date = new Date();
+		   return dateFormat.format(date);
 	}
 
 }
