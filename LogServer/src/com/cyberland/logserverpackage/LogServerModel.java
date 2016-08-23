@@ -229,6 +229,10 @@ public class LogServerModel extends Observable
 	
 	public DefaultTableModel getTableModelForSelectedLog()
 	{
+		Object[][] defaultData = {
+			    {"4:20", "Out of Mind"}};
+		String[] columnNames = {"Zeit","Haltestelle"};
+		
 		String customer = getSelectedCustomer();
 		String log = getSelectedLog();
 		
@@ -257,7 +261,8 @@ public class LogServerModel extends Observable
 		}
 		
 		System.out.println(""+logEntries.size());
-		if (logEntries.size()==0) return null;
+		
+		if (logEntries.size()==0) return new DefaultTableModel(defaultData,columnNames);
 		
 		Object[][] tableData = new Object[logEntries.size()][2];
 		
@@ -269,8 +274,8 @@ public class LogServerModel extends Observable
 			tableData[i][0] = time;
 			tableData[i][1] = station;
 		}
-		String[] _columnNames = {"Zeit","Haltestelle"};
-		DefaultTableModel tableModel = new DefaultTableModel(tableData,_columnNames);
+		
+		DefaultTableModel tableModel = new DefaultTableModel(tableData,columnNames);
 		
 		//TODO 
 		return tableModel;
