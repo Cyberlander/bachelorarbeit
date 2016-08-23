@@ -231,8 +231,11 @@ public class LogServerModel extends Observable
 	{
 		String customer = getSelectedCustomer();
 		String log = getSelectedLog();
-		String filePath = "data/customerlogs/"+customer + "/" + log;
+		String filePath2 = "data/customerlogs/"+customer + "/" + log;
+		String filePath = "data/customerlogs/Felix Fröhlich/log1.txt";
+		System.out.println(filePath);
 		String line = null;
+		List<String> logEntries = new ArrayList<String>();
 		try 
 		{
 			FileReader fileReader = new FileReader(filePath);
@@ -243,16 +246,33 @@ public class LogServerModel extends Observable
 			
 			while ((line = bufferedReader.readLine()) != null)
 			{
+				logEntries.add(line);
 				System.out.println(line);
 			}
 			bufferedReader.close();
 		}
 		catch (IOException e)
 		{
-			
+			System.out.println("Fehler beim Dateilesen");
 		}
 		
+		System.out.println(""+logEntries.size());
+		if (logEntries.size()==0) return null;
+		
+		Object[][] tableData = new Object[logEntries.size()][2];
+		
+		for (int i=0;i<logEntries.size();i++)
+		{
+			String[] parts = logEntries.get(i).split("/");
+			String time = parts[0];
+			String station = parts[1];
+			tableData[i][0] = time;
+			tableData[i][1] = station;
+		}
+		String[] _columnNames = {"Zeit","Haltestelle"};
+		DefaultTableModel tableModel = new DefaultTableModel(tableData,_columnNames);
+		
 		//TODO 
-		return null;
+		return tableModel;
 	}
 }

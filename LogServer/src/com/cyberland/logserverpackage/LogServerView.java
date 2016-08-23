@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerListModel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogServerView extends JFrame implements Observer
@@ -168,6 +169,18 @@ public class LogServerView extends JFrame implements Observer
 		_chooseSpecificLogForCustomerJComboBox.setModel(logComboBoxModel);
 		
 		_chooseSpecificLogForCustomerJComboBox.setSelectedItem(model.getSelectedLog());
+		
+		//ändern des Tabellen-Inhalts
+		try
+		{
+			DefaultTableModel defaultTableModel = model.getTableModelForSelectedLog();
+			_logTable.setModel(defaultTableModel);
+		}
+		catch (NullPointerException e)
+		{
+			
+		}
+		
 		
 		
 	}
