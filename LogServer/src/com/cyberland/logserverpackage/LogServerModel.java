@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javax.swing.table.DefaultTableModel;
+
 
 public class LogServerModel extends Observable 
 {
@@ -224,4 +226,33 @@ public class LogServerModel extends Observable
 		return this._selectedLog;
 	}
 
+	
+	public DefaultTableModel getTableModelForSelectedLog()
+	{
+		String customer = getSelectedCustomer();
+		String log = getSelectedLog();
+		String filePath = "data/customerlogs/"+customer + "/" + log;
+		String line = null;
+		try 
+		{
+			FileReader fileReader = new FileReader(filePath);
+			
+			
+			//Filereader immer in BufferedReader wrappen
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while ((line = bufferedReader.readLine()) != null)
+			{
+				System.out.println(line);
+			}
+			bufferedReader.close();
+		}
+		catch (IOException e)
+		{
+			
+		}
+		
+		//TODO 
+		return null;
+	}
 }

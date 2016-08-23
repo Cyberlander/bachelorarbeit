@@ -19,6 +19,8 @@ public class LogServerController
 		mModel.setSelectedCustomer(mModel.getCustomers().get(0));
 		mModel.setSelectedLog(mModel.getLogsForCustomer(mModel.getSelectedCustomer()).get(0));
 		
+		mModel.getTableModelForSelectedLog();
+		
 	
 		
 		mView.addChangeServerStateListener(e -> mModel.changeServerStatus());
