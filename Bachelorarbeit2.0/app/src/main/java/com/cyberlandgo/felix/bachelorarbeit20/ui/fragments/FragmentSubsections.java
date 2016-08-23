@@ -30,7 +30,7 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_overview, container, false);
+        view = inflater.inflate(R.layout.fragment_subsections, container, false);
 
         return view;
     }

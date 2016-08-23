@@ -25,6 +25,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDat
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Subsection;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentDebug;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
+import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentSubsections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(fragmentOverview, "Übersicht");
-        adapter.addFragment(new FragmentOverview(), "Teilstrecken");
+        adapter.addFragment(new FragmentSubsections(), "Teilstrecken");
         adapter.addFragment(new FragmentDebug(), "Debug");
         viewPager.setAdapter(adapter);
     }
