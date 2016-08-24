@@ -47,7 +47,6 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
 
         _subsectionDataSource = new SubsectionDataSource(getContext());
         _subsectionDataSource.open();
-        _subsectionDataSource.createSubsection("a","b","c");
 
         //Liste der Teilstrecken
         ArrayList<Subsection> list = _subsectionDataSource.getAllSubsections();

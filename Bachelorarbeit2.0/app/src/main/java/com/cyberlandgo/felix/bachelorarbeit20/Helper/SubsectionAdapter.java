@@ -33,9 +33,11 @@ public class SubsectionAdapter extends ArrayAdapter<Subsection>
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_subsection, parent, false);
         }
 
+        TextView item_line = (TextView) convertView.findViewById(R.id.item_line);
         TextView item_startstation = (TextView) convertView.findViewById(R.id.item_startstation);
         TextView item_endstation = (TextView) convertView.findViewById(R.id.item_endstation);
 
+        item_line.setText(subsection.getLine());
         item_startstation.setText(subsection.getFrom());
         item_endstation.setText(subsection.getTo());
 
