@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.BluetoothGuard;
@@ -87,6 +89,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     public void onCreate()
     {
         super.onCreate();
+
+        Log.e("DEVICE-NAME:",android.os.Build.MODEL);
+        Log.e("Manufacturer:", Build.MANUFACTURER);
+        Log.e("Serial:", Build.SERIAL);
+        Log.e("User:", Build.USER);
+
+
 
         //Ezeugen des Preferences-Objekt und Zuweisung der Application als dessen Kontext
         preferences = new Preferences(this);
@@ -188,7 +197,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         Preferences.saveCurrentStartstation(minorStationMap.get(currentMinorIdentifierString));
 
         //Serverseitiges Loggen
-        sendStationToServer(minorStationMap.get(currentMinorIdentifierString));
+        sendStationToServer(getDeviceId(this),minorStationMap.get(currentMinorIdentifierString));
 
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
@@ -618,10 +627,12 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         mNotificationManager.notify(notifyID, mBuilder.build());
     }
 
-    public void sendStationToServer(String station)
+    public void sendStationToServer(String customer,String station)
     {
         Log.e("sendStationToServer","wird geöffnet");
         final String stationFinal = station;
+        final String customerFinal = customer;
+
         new AsyncTask<Void,Void,List<String>>()
         {
             protected List<String> doInBackground(Void... params)
@@ -634,7 +645,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
                     //while run
-                    out.println("AndroidUser/" + stationFinal);
+                    out.println(customerFinal + "/" + stationFinal);
                     Log.e("Android User","schickt an Server");
                 }
                 catch (IOException e)
@@ -644,5 +655,20 @@ public class BillingSystemApplication extends Application implements BootstrapNo
                 return null;
             }
         }.execute();
+    }
+
+
+    /**
+     * Diese Methode liefert die Device-ID zurück, die mit an den Server geschickt wird
+     * @param context
+     * @return
+     */
+    public static String getDeviceId(Context context) {
+        final String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        if (deviceId != null) {
+            return deviceId;
+        } else {
+            return android.os.Build.SERIAL;
+        }
     }
 }
