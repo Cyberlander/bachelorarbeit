@@ -3,9 +3,11 @@ package com.cyberlandgo.felix.bachelorarbeit20.ui.fragments;
 /**
  * Created by Felix on 19.08.2016.
  */
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
 
     SubsectionAdapter _adapter;
     ListView _listview;
+    ArrayList<Subsection> _SubsectionObjectlist;
     public FragmentSubsections() {
         // Required empty public constructor
     }
@@ -49,9 +52,14 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
         _subsectionDataSource.open();
 
         //Liste der Teilstrecken
-        ArrayList<Subsection> list = _subsectionDataSource.getAllSubsections();
-        addListView(list);
+        _SubsectionObjectlist = _subsectionDataSource.getAllSubsections();
+        addListView(_SubsectionObjectlist);
 
+        SharedPreferences sharedPref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        //Listener lauscht nun ob sich Preferences ändern, wenn
+        //das Fragment sichtbar ist
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
 
         return view;
     }
@@ -67,8 +75,12 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
     @Override
     public void  onSharedPreferenceChanged  (SharedPreferences  sharedPreferences, String  key)
     {
-
+        ArrayList<Subsection> subsection_list = _subsectionDataSource.getAllSubsections();
+        _adapter = new SubsectionAdapter(getContext(), subsection_list);
+        _listview.setAdapter(_adapter);
     }
+
+
 
     public void addListView(ArrayList<Subsection> list)
     {
@@ -78,5 +90,22 @@ public class FragmentSubsections extends Fragment implements SharedPreferences.O
         _adapter = new SubsectionAdapter(getContext(), subsection_list);
 
         _listview.setAdapter(_adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        //Listener lauscht nun ob sich Preferences ändern, wenn
+        //das Fragment sichtbar ist
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+    }
+    @Override
+    public void onPause() {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
     }
 }

@@ -172,6 +172,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     @Override
     public void didEnterRegion(Region region)
     {
+        Log.e("Region","betreten");
         Identifier currentMajorIdentifier = region.getId2();
         Identifier currentMinorIdentifier = region.getId3();
 
@@ -556,6 +557,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     {
         if (Preferences.getBooleanHasToPayTicket()==true)
         {
+            //Löschen aller Teilstrecken
+            _subsectionDataSource.deleteAllSubsections();
             //Zurücksetzen sämtlicher Werte
             Preferences.saveBooleanHasToPayTicket(false);
             Preferences.saveCurrentAmountOfStations(0);
@@ -568,8 +571,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
 
-            //Löschen aller Teilstrecken
-            _subsectionDataSource.deleteAllSubsections();
+
         }
     }
 

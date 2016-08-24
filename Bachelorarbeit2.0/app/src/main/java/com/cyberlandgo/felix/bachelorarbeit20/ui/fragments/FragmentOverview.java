@@ -69,6 +69,10 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         stationDataSource = new StationDataSource(getContext());
         stationDataSource.open();
 
+        //instanziieren der Schnittstelle zur Teilstrecken-Tabelle
+        _subsectionDataSource = new SubsectionDataSource(getContext());
+        _subsectionDataSource.open();
+
         //Preferences.saveBooleanDetailedViewTextfieldStartstation(true);
 
         initUIElements();
@@ -221,6 +225,8 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
     {
         if (Preferences.getBooleanHasToPayTicket()==true)
         {
+            //Löschen aller Teilstrecken
+            _subsectionDataSource.deleteAllSubsections();
             //Zurücksetzen sämtlicher Werte
             Preferences.saveBooleanHasToPayTicket(false);
             Preferences.saveCurrentAmountOfStations(0);
@@ -233,8 +239,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
 
-            //Löschen aller Teilstrecken
-            _subsectionDataSource.deleteAllSubsections();
+
         }
     }
 
