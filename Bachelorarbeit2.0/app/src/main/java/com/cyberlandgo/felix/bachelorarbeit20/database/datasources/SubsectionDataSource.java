@@ -62,6 +62,11 @@ public class SubsectionDataSource
         database.delete(MySQLiteHelper.TABLE_SUBSECTIONS, MySQLiteHelper.COLUMN_ID2 + " = " + id, null);
     }
 
+    public void deleteAllSubsections()
+    {
+        database.delete(MySQLiteHelper.TABLE_SUBSECTIONS,null,null);
+    }
+
     public ArrayList<Subsection> getAllSubsections()
     {
         ArrayList<Subsection> subsections = new ArrayList<>();

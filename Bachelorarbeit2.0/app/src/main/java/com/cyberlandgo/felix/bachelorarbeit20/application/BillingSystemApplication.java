@@ -567,6 +567,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Preferences.saveCurrentTargetStation("");
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
+
+            //Löschen aller Teilstrecken
+            _subsectionDataSource.deleteAllSubsections();
         }
     }
 

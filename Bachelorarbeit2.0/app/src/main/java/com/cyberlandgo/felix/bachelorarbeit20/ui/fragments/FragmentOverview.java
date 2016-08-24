@@ -26,6 +26,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
 import com.cyberlandgo.felix.bachelorarbeit20.application.StateMachine;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
     TextView textViewStartStation;
     TextView textViewTargetStation;
     TextView textViewPayTicket;
+
+    SubsectionDataSource _subsectionDataSource;
 
     public FragmentOverview() {
         // Required empty public constructor
@@ -62,6 +65,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
         stationDataSource.open();
         ArrayList<Station> l = stationDataSource.getAllStations();
         Station station1 = l.get(0);
+
+        stationDataSource = new StationDataSource(getContext());
+        stationDataSource.open();
 
         //Preferences.saveBooleanDetailedViewTextfieldStartstation(true);
 
@@ -226,6 +232,9 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             Preferences.saveCurrentTargetStation("");
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
+
+            //Löschen aller Teilstrecken
+            _subsectionDataSource.deleteAllSubsections();
         }
     }
 
