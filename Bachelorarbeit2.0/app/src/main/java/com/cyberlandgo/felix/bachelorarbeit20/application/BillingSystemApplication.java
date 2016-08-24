@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -33,6 +34,9 @@ import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,6 +186,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //für Debugging: aktuelle Station loggen
         Preferences.saveCurrentStartstation(minorStationMap.get(currentMinorIdentifierString));
+
+        //Serverseitiges Loggen
+        sendStationToServer(minorStationMap.get(currentMinorIdentifierString));
 
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
@@ -609,5 +616,33 @@ public class BillingSystemApplication extends Application implements BootstrapNo
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(notifyID, mBuilder.build());
+    }
+
+    public void sendStationToServer(String station)
+    {
+        Log.e("sendStationToServer","wird geöffnet");
+        final String stationFinal = station;
+        new AsyncTask<Void,Void,List<String>>()
+        {
+            protected List<String> doInBackground(Void... params)
+            {
+                try {
+                    Socket clientSocket = new Socket("192.168.0.89", 6666);
+
+
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+
+                    //while run
+                    out.println("AndroidUser/" + stationFinal);
+                    Log.e("Android User","schickt an Server");
+                }
+                catch (IOException e)
+                {
+
+                }
+                return null;
+            }
+        }.execute();
     }
 }
