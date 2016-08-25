@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -84,6 +86,10 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
     //Datasource für die Teilstrecken
     SubsectionDataSource _subsectionDataSource;
+
+    //CountdownTimer, wenn Bus-Region verlassen wird
+    Handler _handlerCountdownBus;
+    Runnable _runnableForHandlerCountdownBus;
 
     @Override
     public void onCreate()
@@ -321,6 +327,14 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         }
 
 
+        //wenn eine Bus-Region verlassen wurde, dann starte den Timer
+        String currentMajorIDString = "" + region.getId2();
+        if (currentMajorIDString.equals(Values.MAJOR_ID_BUS))
+        {
+            //setCountDownAfterLeavingBus();
+        }
+
+
     }
 
 
@@ -522,11 +536,16 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //Menge der zurückgelegten Stationen speichern
         Preferences.saveCurrentAmountOfStations(amountOfStation);
 
+
         //Subsection für Bus erstellen
         //todo das soll eigentlich erst passieren, wenn Bus verlassen wurde
-        _subsectionDataSource.createSubsection(TicketDetailHelper.getLineForMinorID(Preferences.getCurrentMinorIDTargetStation()),
+        /*
+        _subsectionDataSource.createSubsection(TicketDetailHelper.getLineForMinorID(
+                Preferences.getCurrentMinorIDTargetStation()),
                 Preferences.getCurrentStartStationBusForSubsection(),
                 Preferences.getCurrentTargetStation());
+        */
+
 
         //ab jetzt kann ein Ticket bezahlt werden
         Preferences.saveBooleanHasToPayTicket(true);
@@ -683,4 +702,29 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             return android.os.Build.SERIAL;
         }
     }
+
+    /**
+     * Wenn eine Bus-Region verlassen wurde, dann wird ein Handler-Objekt
+     * erzeugt, dass eine Runnable innerhalb von einer Minute startet.
+     * Wird innerhalb dieser Minute eine neue Bus-Region betreten, wird
+     * die Runnable wird entfernt (removeCallback). Wird innerhalb einer
+     * Minute keine neue Bus-Region betreten, dann geht die Applikation
+     * davon aus, dass der Bus endgültig verlassen wurde und eine Subsection
+     * wird erzeugt
+     */
+    public void setCountDownAfterLeavingBus()
+    {
+        _runnableForHandlerCountdownBus = new Runnable() {
+            @Override
+            public void run() {
+                Log.e("Timer", " beendet");
+            }
+        };
+
+        _handlerCountdownBus = new Handler();
+        Log.e("Timer", " gestartet");
+        _handlerCountdownBus.postDelayed(_runnableForHandlerCountdownBus,30000);
+    }
+
+
 }
