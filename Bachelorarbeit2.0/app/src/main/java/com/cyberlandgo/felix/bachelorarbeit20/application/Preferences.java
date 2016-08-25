@@ -23,6 +23,7 @@ public class Preferences
     public static final String keyCurrentMinorIDTargetStation = "keyCurrentMinorIDTargetStation";
     public static final String keyBooleanHasToPayTicket = "keyBooleanHasToPayTicket";
     public static final String keyBooleanIsBluetoothGuardActive = "keyBooleanIsBluetoothGuardActive";
+    public static final String keyCurrentStartStationBusForSubsection = "keyCurrentStartStationBusForSubsection";
 
 
 
@@ -147,6 +148,21 @@ public class Preferences
     }
 
 
+    //Bus-Startstation für Berechnung der Subsections
+    public static void saveCurrentStartStationBusForSubsection(String busstation)
+    {
+        saveSharedSetting(mContext, keyCurrentStartStationBusForSubsection, busstation);
+    }
+
+    public static String getCurrentStartStationBusForSubsection()
+    {
+        return readSharedSetting(mContext, keyCurrentStartStationBusForSubsection);
+    }
+
+
+
+
+
 
     //Status ob ein Ticket bezahlt werden muss
     public static void saveBooleanHasToPayTicket(boolean value)
@@ -184,9 +200,6 @@ public class Preferences
     {
         return readSharedSettingBoolean(mContext, keyBooleanDetailedViewTextfieldTargetstation);
     }
-
-
-
 
 
 

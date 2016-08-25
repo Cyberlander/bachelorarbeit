@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/textview_currentStatus"
-        android:textSize="35sp"
+        android:textSize="25sp"
         android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -24,7 +24,7 @@
 
         android:background="@color/colorPrimaryDark"
         style="@style/MyMaterialTheme"
-        android:layout_weight="282"/>
+        android:layout_weight="182"/>
 
     <View
         android:id="@+id/viewLine"
@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/textview_currentStation"
-            android:textSize="35sp"
+            android:textSize="25sp"
             android:textColor="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -45,7 +45,7 @@
 
             android:background="@color/colorPrimaryDark"
             style="@style/MyMaterialTheme"
-            android:layout_weight="282"/>
+            android:layout_weight="182"/>
 
         <View
             android:id="@+id/viewLine2"
@@ -53,7 +53,19 @@
             android:layout_width="fill_parent"
             android:background="@color/colorAccent" />
 
+        <TextView
+            android:id="@+id/textview_currentAmountOfStations"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Aktuelle Station"
+            android:gravity="center"
+            android:textStyle="bold"
 
+            android:background="@color/colorPrimaryDark"
+            style="@style/MyMaterialTheme"
+            android:layout_weight="182"/>
 
     </LinearLayout>
 

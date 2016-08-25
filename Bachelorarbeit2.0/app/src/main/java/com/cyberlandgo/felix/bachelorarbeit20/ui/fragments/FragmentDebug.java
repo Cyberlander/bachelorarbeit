@@ -33,6 +33,7 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
     //UI-Elemente
     TextView textViewCurrentStatus;
     TextView textViewCurrentStation;
+    TextView textViewAmountOfStations;
 
 
     public FragmentDebug() {
@@ -64,6 +65,7 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
     {
         textViewCurrentStatus = (TextView) view.findViewById(R.id.textview_currentStatus);
         textViewCurrentStation = (TextView) view.findViewById(R.id.textview_currentStation);
+        textViewAmountOfStations = (TextView) view.findViewById(R.id.textview_currentAmountOfStations);
     }
 
     public void updateUI()
@@ -79,9 +81,11 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
         //schon eine Startstation gesehen
         else
         {
-            textViewCurrentStation.setText(Preferences.getCurrentStartstation());
+            textViewCurrentStation.setText("Station: " + Preferences.getCurrentStartstation());
 
         }
+
+        textViewAmountOfStations.setText("Besuchte Stationen: " + Preferences.getCurrentAmountOfStations());
     }
 
 

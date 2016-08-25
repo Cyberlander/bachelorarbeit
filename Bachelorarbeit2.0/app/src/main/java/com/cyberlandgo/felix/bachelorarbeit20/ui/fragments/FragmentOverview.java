@@ -80,7 +80,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
 
 
-        Toast.makeText(getContext(),""+Preferences.getCurrentAmountOfStations(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(),""+Preferences.getCurrentAmountOfStations(),Toast.LENGTH_LONG).show();
         return view;
     }
 
@@ -220,7 +220,6 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
      * Diese Methode setzt alle Preferences in ihren Anfangszustand, d.h. auch
      * der Automat befindet sich wieder im Zustand not running
      */
-    //TODO Kommunikation mit dem Server (Logging)
     public void payTicketResetPreferences()
     {
         if (Preferences.getBooleanHasToPayTicket()==true)
@@ -238,6 +237,7 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
             Preferences.saveCurrentTargetStation("");
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
+            Preferences.saveCurrentStartStationBusForSubsection("");
 
 
         }

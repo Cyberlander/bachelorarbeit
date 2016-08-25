@@ -264,6 +264,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             else if (currentMajorIdentifierString.equals(Values.MAJOR_ID_BUS))
             {
                 Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
+
+                //für Subsection-Berechnung
+                Preferences.saveCurrentStartStationBusForSubsection(minorStationMap.get(currentMinorIdentifierString));
             }
 
         }
@@ -434,6 +437,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         else if (currentMajorNumber.equals(Values.MAJOR_ID_BUS))
         {
             Preferences.saveStatusStateMachine(StateMachine.STATUS_START_REGION_BUS);
+
+            //für Subsection-Berechnung
+            Preferences.saveCurrentStartStationBusForSubsection(startStation);
         }
 
 
@@ -516,6 +522,11 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //Menge der zurückgelegten Stationen speichern
         Preferences.saveCurrentAmountOfStations(amountOfStation);
 
+        //Subsection für Bus erstellen
+        //todo das soll eigentlich erst passieren, wenn Bus verlassen wurde
+        _subsectionDataSource.createSubsection(TicketDetailHelper.getLineForMinorID(Preferences.getCurrentMinorIDTargetStation()),
+                Preferences.getCurrentStartStationBusForSubsection(),
+                Preferences.getCurrentTargetStation());
 
         //ab jetzt kann ein Ticket bezahlt werden
         Preferences.saveBooleanHasToPayTicket(true);
@@ -586,6 +597,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             Preferences.saveCurrentTargetStation("");
             Preferences.saveStatusStateMachine(StateMachine.STATUS_NOT_RUNNING);
             Preferences.saveBooleanIsBluetoothGuardActive(false);
+            Preferences.saveCurrentStartStationBusForSubsection("");
 
 
         }
