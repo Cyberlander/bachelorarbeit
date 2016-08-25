@@ -34,6 +34,8 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
     TextView textViewCurrentStatus;
     TextView textViewCurrentStation;
     TextView textViewAmountOfStations;
+    TextView textViewGPSState;
+
 
 
     public FragmentDebug() {
@@ -66,6 +68,18 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
         textViewCurrentStatus = (TextView) view.findViewById(R.id.textview_currentStatus);
         textViewCurrentStation = (TextView) view.findViewById(R.id.textview_currentStation);
         textViewAmountOfStations = (TextView) view.findViewById(R.id.textview_currentAmountOfStations);
+        textViewGPSState = (TextView) view.findViewById(R.id.textview_GPSState);
+
+        textViewGPSState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                boolean isGPSon = Preferences.getBooleanGPSUsage();
+                isGPSon = !isGPSon;
+                Preferences.saveBooleanGPSUsage(isGPSon);
+            }
+        });
+
     }
 
     public void updateUI()
@@ -86,6 +100,18 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
         }
 
         textViewAmountOfStations.setText("Besuchte Stationen: " + Preferences.getCurrentAmountOfStations());
+
+        boolean isGPSactivated = Preferences.getBooleanGPSUsage();
+
+        if (!isGPSactivated)
+        {
+            textViewGPSState.setText("GPS: aus");
+        }
+        else if (isGPSactivated)
+        {
+            textViewGPSState.setText("GPS: an");
+        }
+
     }
 
 

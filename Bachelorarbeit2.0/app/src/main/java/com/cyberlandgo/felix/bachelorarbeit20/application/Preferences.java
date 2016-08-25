@@ -24,6 +24,7 @@ public class Preferences
     public static final String keyBooleanHasToPayTicket = "keyBooleanHasToPayTicket";
     public static final String keyBooleanIsBluetoothGuardActive = "keyBooleanIsBluetoothGuardActive";
     public static final String keyCurrentStartStationBusForSubsection = "keyCurrentStartStationBusForSubsection";
+    public static final String keyGPSUsage = "keyGPSUsage";
 
 
 
@@ -217,6 +218,16 @@ public class Preferences
     }
 
 
+    //GPS Benutzung an/aus
+    public static void saveBooleanGPSUsage(boolean gpsStatus)
+    {
+        saveSharedSettingBoolean(mContext, keyGPSUsage, gpsStatus);
+    }
+
+    public static boolean getBooleanGPSUsage()
+    {
+        return readSharedSettingBoolean(mContext, keyGPSUsage);
+    }
 
 
 

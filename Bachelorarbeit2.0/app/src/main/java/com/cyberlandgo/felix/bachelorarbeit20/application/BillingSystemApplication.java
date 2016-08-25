@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import android.util.Log;
 
 import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.BluetoothGuard;
 import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.DateChangedReceiver;
+import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.GPSStateHasChangedBroadcastReceiver;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
@@ -83,6 +85,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     //dieser Receiver lauscht, ob sich das Datum geändert hat
     BroadcastReceiver dateChangedBroadcastReceiver;
 
+    //dieser Receiver lauscht, ob GPS aktiviert/deaktiviert wurde
+    BroadcastReceiver _hasGPSStatusChangedBroadcastReceiver;
 
     //Datasource für die Teilstrecken
     SubsectionDataSource _subsectionDataSource;
@@ -95,6 +99,8 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     public void onCreate()
     {
         super.onCreate();
+
+
 
         Log.e("DEVICE-NAME:",android.os.Build.MODEL);
         Log.e("Manufacturer:", Build.MANUFACTURER);
@@ -159,6 +165,10 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         dateChangedBroadcastReceiver = DateChangedReceiver.getDateChangedBroadcastReceiver(this);
         IntentFilter filterDateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
         registerReceiver(dateChangedBroadcastReceiver, filterDateChanged);
+
+        _hasGPSStatusChangedBroadcastReceiver = GPSStateHasChangedBroadcastReceiver.getGPSStateHasChangedBroadcastReceiver(this);
+        IntentFilter filterHasGPSStateChanged = new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION);
+        registerReceiver(_hasGPSStatusChangedBroadcastReceiver,filterHasGPSStateChanged);
 
         //instanziieren der Schnittstelle zur Teilstrecken-Tabelle
         _subsectionDataSource = new SubsectionDataSource(this);
@@ -714,16 +724,27 @@ public class BillingSystemApplication extends Application implements BootstrapNo
      */
     public void setCountDownAfterLeavingBus()
     {
-        _runnableForHandlerCountdownBus = new Runnable() {
-            @Override
-            public void run() {
-                Log.e("Timer", " beendet");
-            }
-        };
+
 
         _handlerCountdownBus = new Handler();
-        Log.e("Timer", " gestartet");
-        _handlerCountdownBus.postDelayed(_runnableForHandlerCountdownBus,30000);
+
+        _runnableForHandlerCountdownBus = new CountDownAfterLavingBusRunnable();
+
+
+        _handlerCountdownBus.postDelayed(_runnableForHandlerCountdownBus,1000);
+    }
+
+
+    private class CountDownAfterLavingBusRunnable implements Runnable
+    {
+        public CountDownAfterLavingBusRunnable()
+        {
+            Log.e("Runnable", " created");
+        }
+        @Override
+        public void run() {
+            Log.e("Timer", " terminated");
+        }
     }
 
 

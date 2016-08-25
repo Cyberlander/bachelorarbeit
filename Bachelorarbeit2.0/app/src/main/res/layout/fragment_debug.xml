@@ -67,6 +67,26 @@
             style="@style/MyMaterialTheme"
             android:layout_weight="182"/>
 
+        <View
+            android:id="@+id/viewLine3"
+            android:layout_height="5dp"
+            android:layout_width="fill_parent"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textview_GPSState"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Aktuelle Station"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:background="@color/colorPrimaryDark"
+            style="@style/MyMaterialTheme"
+            android:layout_weight="182"/>
+
     </LinearLayout>
 
 </RelativeLayout>
