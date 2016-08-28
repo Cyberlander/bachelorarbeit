@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
+import com.cyberlandgo.felix.bachelorarbeit20.database.models.StationGPSCoordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper
         public static final String COLUMN_TO = "zu";
 
 
+        //Werte für GPS-Koordinaten
+        public static final String TABLE_GPS_COORDINATES = "gpsCoordinatesTable";
+        public static final String COLUMN_ID3 = "id3";
+
+        public static final String COLUMN_GPS_STATION = "gps_station";
+        public static final String COLUMN_LATITUDE = "latitude";
+        public static final String COLUMN_LONGITUDE = "longitude";
 
 
         public static final String DATABASE_NAME= "stations.db";
@@ -55,6 +63,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 + COLUMN_TO + " text not null);";
 
 
+        //GPSCoordinates-Table creation statement
+        private static final String GPSCOORDINATES_CREATE_STATEMENT = "create table " + TABLE_GPS_COORDINATES
+                + "(" + COLUMN_ID3 + " integer primary key autoincrement,"
+                + COLUMN_GPS_STATION + " text not null,"
+                + COLUMN_LATITUDE + " text not null,"
+                + COLUMN_LONGITUDE + " text not null);";
 
         public MySQLiteHelper(Context context)
         {
@@ -68,8 +82,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 
                 database.execSQL(DATABASE_CREATE);
                 database.execSQL(SUBSECTION_CREATE_STATEMENT);
+                database.execSQL(GPSCOORDINATES_CREATE_STATEMENT);
 
                 addStations();
+                addStationGPSCoordinates();
 
         }
 
@@ -78,6 +94,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
         {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATIONS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBSECTIONS);
+            db.execSQL("DROP TABLE IF EXISTS " + GPSCOORDINATES_CREATE_STATEMENT);
         }
 
 
@@ -152,5 +169,47 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 dbase.insert(TABLE_STATIONS,null,values);
         }
 
+
+        public void addStationGPSCoordinates()
+        {
+                //Erstellen der U2 GPSCoordinates-Stationen-Objekte
+                StationGPSCoordinates[] gpscoordinates_stationen_u2 = new StationGPSCoordinates[25];
+                gpscoordinates_stationen_u2[0] = new StationGPSCoordinates(Values.STATION_U2_NIENDORF_NORD, Values.MAJOR_ID_TRAIN,"20000");
+                gpscoordinates_stationen_u2[1] = new StationGPSCoordinates(Values.STATION_U2_SCHIPPELSWEG, Values.MAJOR_ID_TRAIN,"20001");
+                gpscoordinates_stationen_u2[2] = new StationGPSCoordinates(Values.STATION_U2_JOACHIM_MAEHL_STRASSE, Values.MAJOR_ID_TRAIN,"20002");
+                gpscoordinates_stationen_u2[3] = new StationGPSCoordinates(Values.STATION_U2_NIENDORF_MARKT, Values.MAJOR_ID_TRAIN,"20003");
+                gpscoordinates_stationen_u2[4] = new StationGPSCoordinates(Values.STATION_U2_HAGENDEEL, Values.MAJOR_ID_TRAIN,"20004");
+                gpscoordinates_stationen_u2[5] = new StationGPSCoordinates(Values.STATION_U2_HAGENBECKS_TIERPARK, Values.MAJOR_ID_TRAIN,"20005");
+                gpscoordinates_stationen_u2[6] = new StationGPSCoordinates(Values.STATION_U2_LUTTHEROTHSTRASSE, Values.MAJOR_ID_TRAIN,"20006");
+                gpscoordinates_stationen_u2[7] = new StationGPSCoordinates(Values.STATION_U2_OSTERSTRASSE, Values.MAJOR_ID_TRAIN,"20007");
+                gpscoordinates_stationen_u2[8] = new StationGPSCoordinates(Values.STATION_U2_EMILIENSTRASSE, Values.MAJOR_ID_TRAIN,"20008");
+                gpscoordinates_stationen_u2[9] = new StationGPSCoordinates(Values.STATION_U2_CHRISTUSKIRCHE, Values.MAJOR_ID_TRAIN,"20009");
+                gpscoordinates_stationen_u2[10] = new StationGPSCoordinates(Values.STATION_U2_SCHLUMP, Values.MAJOR_ID_TRAIN,"20010");
+                gpscoordinates_stationen_u2[11] = new StationGPSCoordinates(Values.STATION_U2_MESSEHALLEN, Values.MAJOR_ID_TRAIN,"20011");
+                gpscoordinates_stationen_u2[12] = new StationGPSCoordinates(Values.STATION_U2_GAENSEMARKT, Values.MAJOR_ID_TRAIN,"20012");
+                gpscoordinates_stationen_u2[13] = new StationGPSCoordinates(Values.STATION_U2_JUNGFERNSTIEG, Values.MAJOR_ID_TRAIN,"20013");
+                gpscoordinates_stationen_u2[14] = new StationGPSCoordinates(Values.STATION_U2_HAUPTBAHNHOF_NORD, Values.MAJOR_ID_TRAIN,"20014");
+                gpscoordinates_stationen_u2[15] = new StationGPSCoordinates(Values.STATION_U2_BERLINER_TOR, Values.MAJOR_ID_TRAIN,"20015");
+                gpscoordinates_stationen_u2[16] = new StationGPSCoordinates(Values.STATION_U2_BURGSTRASSE, Values.MAJOR_ID_TRAIN,"20016");
+                gpscoordinates_stationen_u2[17] = new StationGPSCoordinates(Values.STATION_U2_HAMMER_KIRCHE, Values.MAJOR_ID_TRAIN,"20017");
+                gpscoordinates_stationen_u2[18] = new StationGPSCoordinates(Values.STATION_U2_RAUES_HAUS, Values.MAJOR_ID_TRAIN,"20018");
+                gpscoordinates_stationen_u2[19] = new StationGPSCoordinates(Values.STATION_U2_HORNER_RENNBAHN, Values.MAJOR_ID_TRAIN,"20019");
+                gpscoordinates_stationen_u2[20] = new StationGPSCoordinates(Values.STATION_U2_LEGIENSTRASSE, Values.MAJOR_ID_TRAIN,"20020");
+                gpscoordinates_stationen_u2[21] = new StationGPSCoordinates(Values.STATION_U2_BILLSTEDT, Values.MAJOR_ID_TRAIN,"20021");
+                gpscoordinates_stationen_u2[22] = new StationGPSCoordinates(Values.STATION_U2_MERKENSTRASSE, Values.MAJOR_ID_TRAIN,"20222");
+                gpscoordinates_stationen_u2[23] = new StationGPSCoordinates(Values.STATION_U2_STEINFURTER_ALLEE, Values.MAJOR_ID_TRAIN,"20023");
+                gpscoordinates_stationen_u2[24] = new StationGPSCoordinates(Values.STATION_U2_MUEMMELMANNSBERG, Values.MAJOR_ID_TRAIN,"20024");
+        }
+
+
+
+        public void addGPSCoordinate(StationGPSCoordinates stationGPSCoordinates)
+        {
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_GPS_STATION, stationGPSCoordinates.getStation());
+                values.put(COLUMN_LATITUDE, stationGPSCoordinates.getLatitude());
+                values.put(COLUMN_LONGITUDE, stationGPSCoordinates.getLongitude());
+                dbase.insert(TABLE_GPS_COORDINATES,null,values);
+        }
 
 }
