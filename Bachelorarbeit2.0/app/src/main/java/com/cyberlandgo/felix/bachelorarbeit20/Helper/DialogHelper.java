@@ -4,6 +4,9 @@ package com.cyberlandgo.felix.bachelorarbeit20.Helper;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 
 import com.cyberlandgo.felix.bachelorarbeit20.ui.fragments.FragmentOverview;
@@ -91,6 +94,53 @@ public class DialogHelper
     }
 
 
+    public static AlertDialog getGPSGuardDialog(Context context)
+    {android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+        builder.setTitle("GPS wurde deaktiviert! :(");
+
+        final Context contextFinal = context;
+
+        builder.setMessage("Während des Abrechnungsvorgangs wurde GPS deaktiviert. Bitte " +
+                "wieder einschalten, damit die App funktioniert!");
+
+
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        String provider = Settings.Secure.getString(contextFinal.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+                        if(!provider.contains("gps")){ //if gps is disabled
+                            final Intent poke = new Intent();
+                            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+                            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+                            poke.setData(Uri.parse("3"));
+                            contextFinal.sendBroadcast(poke);
+                        }
+
+                    }
+                });
+
+
+
+
+
+        android.support.v7.app.AlertDialog dialog = builder.create();
+
+        return dialog;
+    }
+
+
+
+
+
+
+
+
+
+
+
     public static AlertDialog getBeaconDetectedDialog(Context context)
     {android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Bluetooth wurde deaktiviert! :(");
@@ -127,6 +177,4 @@ public class DialogHelper
 
         return dialog;
     }
-
-
 }

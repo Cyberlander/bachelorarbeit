@@ -101,15 +101,15 @@ public class FragmentDebug extends Fragment implements SharedPreferences.OnShare
 
         textViewAmountOfStations.setText("Besuchte Stationen: " + Preferences.getCurrentAmountOfStations());
 
-        boolean isGPSactivated = Preferences.getBooleanGPSUsage();
+        boolean useGPS = Preferences.getBooleanGPSUsage();
 
-        if (!isGPSactivated)
+        if (!useGPS)
         {
-            textViewGPSState.setText("GPS: aus");
+            textViewGPSState.setText("GPS benutzen: nein");
         }
-        else if (isGPSactivated)
+        else if (useGPS)
         {
-            textViewGPSState.setText("GPS: an");
+            textViewGPSState.setText("GPS benutzen: ja");
         }
 
     }

@@ -139,7 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    public void showGPSGuardDialog()
+    {
+        DialogHelper.getGPSGuardDialog(this).show();
+    }
 
 
     @Override

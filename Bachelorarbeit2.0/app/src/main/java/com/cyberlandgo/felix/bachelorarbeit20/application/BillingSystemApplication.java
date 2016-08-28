@@ -748,4 +748,17 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     }
 
 
+
+    public void reactToGPSTurnedOff()
+    {
+        if (monitoringActivity != null && Preferences.getBooleanGPSUsage())
+        {
+            monitoringActivity.showGPSGuardDialog();
+
+        }
+        else if (monitoringActivity==null && Preferences.getBooleanGPSUsage())
+        {
+            showNotification("GPS wurde deaktivert!","Bitte wieder einschalten!");
+        }
+    }
 }

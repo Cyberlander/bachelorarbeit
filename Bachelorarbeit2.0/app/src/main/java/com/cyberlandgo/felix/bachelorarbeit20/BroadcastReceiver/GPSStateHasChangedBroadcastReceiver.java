@@ -36,6 +36,7 @@ public class GPSStateHasChangedBroadcastReceiver
                 else if (!isEnabled)
                 {
                     Log.e("GPS: ", "nicht aktiviert");
+                    billingSystemApplicationFinal.reactToGPSTurnedOff();
                 }
 
             }
