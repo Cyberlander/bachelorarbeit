@@ -199,6 +199,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 gpscoordinates_stationen_u2[22] = new StationGPSCoordinates(Values.STATION_U2_MERKENSTRASSE, "53.53864458","10.1255064");
                 gpscoordinates_stationen_u2[23] = new StationGPSCoordinates(Values.STATION_U2_STEINFURTER_ALLEE,"53.54093986","10.13795185");
                 gpscoordinates_stationen_u2[24] = new StationGPSCoordinates(Values.STATION_U2_MUEMMELMANNSBERG, "53.52816507","10.14993381");
+
+                for (int i=0;i<gpscoordinates_stationen_u2.length;i++)
+                {
+                        if (gpscoordinates_stationen_u2[i]!=null) this.addGPSCoordinate(gpscoordinates_stationen_u2[i]);
+                }
         }
 
 

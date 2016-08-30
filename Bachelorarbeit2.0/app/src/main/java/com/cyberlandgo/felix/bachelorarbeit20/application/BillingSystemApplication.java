@@ -28,6 +28,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.GPSCoordinatesDatasource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
@@ -94,6 +95,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     //CountdownTimer, wenn Bus-Region verlassen wird
     Handler _handlerCountdownBus;
     Runnable _runnableForHandlerCountdownBus;
+
+    //Datasource für die GPS-Koordinaten
+    GPSCoordinatesDatasource _gpsCoordinatesDatasource;
 
     @Override
     public void onCreate()

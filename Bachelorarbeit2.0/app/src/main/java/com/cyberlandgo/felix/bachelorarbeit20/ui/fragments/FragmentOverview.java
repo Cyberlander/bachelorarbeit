@@ -25,6 +25,7 @@ import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
 import com.cyberlandgo.felix.bachelorarbeit20.application.StateMachine;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Values;
+import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.GPSCoordinatesDatasource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
@@ -75,12 +76,16 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
         //Preferences.saveBooleanDetailedViewTextfieldStartstation(true);
 
+
+        GPSCoordinatesDatasource _gpsCoordinatesDatasource = new GPSCoordinatesDatasource(getContext());
+        _gpsCoordinatesDatasource.open();
+
         initUIElements();
         updateUI();
 
 
 
-        //Toast.makeText(getContext(),""+Preferences.getCurrentAmountOfStations(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),_gpsCoordinatesDatasource.getAllStationGPSCoordinates().toString(),Toast.LENGTH_LONG).show();
         return view;
     }
 
