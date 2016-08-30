@@ -25,6 +25,9 @@ public class Preferences
     public static final String keyBooleanIsBluetoothGuardActive = "keyBooleanIsBluetoothGuardActive";
     public static final String keyCurrentStartStationBusForSubsection = "keyCurrentStartStationBusForSubsection";
     public static final String keyGPSUsage = "keyGPSUsage";
+    public static final String keyCurrentGPSCoordinatesLatitude = "keyCurrentGPSCoordinatesLatitude";
+    public static final String keyCurrentGPSCoordinatesLongitude = "keyCurrentGPSCoordinatesLongitude";
+
 
 
 
@@ -160,7 +163,23 @@ public class Preferences
         return readSharedSetting(mContext, keyCurrentStartStationBusForSubsection);
     }
 
-
+    //Current GPS coordinates
+    public static void saveCurrentGPSCoordinatesLatitude(String latitude)
+    {
+        saveSharedSetting(mContext, keyCurrentGPSCoordinatesLatitude,latitude);
+    }
+    public static String getCurrentGPSCoordinatesLatitude()
+    {
+        return readSharedSetting(mContext, keyCurrentGPSCoordinatesLatitude);
+    }
+    public static void saveCurrentGPSCoordinatesLongitude(String latitude)
+    {
+        saveSharedSetting(mContext, keyCurrentGPSCoordinatesLongitude,latitude);
+    }
+    public static String getCurrentGPSCoordinatesLongitude()
+    {
+        return readSharedSetting(mContext, keyCurrentGPSCoordinatesLongitude);
+    }
 
 
 
