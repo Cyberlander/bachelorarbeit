@@ -29,12 +29,14 @@ import com.cyberlandgo.felix.bachelorarbeit20.BroadcastReceiver.GPSStateHasChang
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.CalendarHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.RegionBuilder;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationGPSCoordinatesHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.GPSCoordinatesDatasource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.StationDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.datasources.SubsectionDataSource;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
+import com.cyberlandgo.felix.bachelorarbeit20.database.models.StationGPSCoordinates;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
 
 import org.altbeacon.beacon.BeaconManager;
@@ -226,6 +228,13 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //Serverseitiges Loggen
         sendStationToServer(getDeviceId(this),minorStationMap.get(currentMinorIdentifierString));
+
+
+        //Überprüfung ob Station mit den GPS-Koordinaten übereinstimmt
+        if (Preferences.getBooleanGPSUsage())
+        {
+            checkBeaconWithGPSCoordinates(currentMinorIdentifierString);
+        }
 
 
         if (currentStatusStateMachine == StateMachine.STATUS_NOT_RUNNING)
@@ -826,6 +835,37 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         {
 
         }
+
+    }
+
+    public void checkBeaconWithGPSCoordinates(String minor)
+    {
+        String beaconStation = minorStationMap.get(minor);
+
+        //get GPS-Coordinates
+        String gpsCoordinates = StationGPSCoordinatesHelper.getCoordinatesForStation(this,beaconStation);
+
+        String gpsCoordinatesArray[] = gpsCoordinates.split(":");
+        String latitude = gpsCoordinatesArray[0];
+        String longitude = gpsCoordinatesArray[1];
+        double latitudeDouble = Double.parseDouble(latitude);
+        double longitudeDouble = Double.parseDouble(longitude);
+
+        String currentLatitude = Preferences.getCurrentGPSCoordinatesLatitude();
+        String currentLongitude = Preferences.getCurrentGPSCoordinatesLongitude();
+        double currentLatitudeDouble = Double.parseDouble(currentLatitude);
+        double currentLongitudeDouble = Double.parseDouble(currentLongitude);
+
+        //Abweichung
+        double deviationLatitude = Math.abs(currentLatitudeDouble - latitudeDouble);
+        double deviationLongitude = Math.abs(currentLongitudeDouble - longitudeDouble);
+
+        //wenn die Abweichung von den tatsächlichen Koordinaten zu Groß ist
+        if (deviationLatitude>0.000025 || deviationLongitude>0.00008)
+        {
+
+        }
+
 
     }
 }

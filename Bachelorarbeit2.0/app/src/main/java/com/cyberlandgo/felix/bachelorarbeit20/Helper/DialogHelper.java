@@ -177,4 +177,33 @@ public class DialogHelper
 
         return dialog;
     }
+
+    public static AlertDialog getGPSCoordinatesWrongDialog(Context context)
+    {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+        builder.setTitle("GPS-Koordinaten und Station stimmen nicht überein :(");
+
+        final Context contextFinal = context;
+
+        builder.setMessage("Deine GPS-Koordinaten scheinen nicht mit der Station übereinzustimmen!");
+
+
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+
+
+                    }
+                });
+
+
+
+
+
+        android.support.v7.app.AlertDialog dialog = builder.create();
+
+        return dialog;
+    }
 }
