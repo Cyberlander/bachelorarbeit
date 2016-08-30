@@ -56,7 +56,7 @@ public class StationGPSCoordinates
 
     public void setLongitude(String longitude)
     {
-        this._longitude = _longitude;
+        this._longitude = longitude;
     }
 
     public String getLongitude()
