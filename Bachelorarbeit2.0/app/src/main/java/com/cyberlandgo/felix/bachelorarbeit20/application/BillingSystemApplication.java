@@ -47,6 +47,7 @@ import org.altbeacon.beacon.startup.RegionBootstrap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +102,9 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
     //Datasource für die GPS-Koordinaten
     GPSCoordinatesDatasource _gpsCoordinatesDatasource;
+
+    //LocationManager für GPS-Koordinaten-Abfrage
+    LocationManager _locationManager;
 
     @Override
     public void onCreate()
@@ -180,6 +184,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         //instanziieren der Schnittstelle zur Teilstrecken-Tabelle
         _subsectionDataSource = new SubsectionDataSource(this);
         _subsectionDataSource.open();
+        initLocationManager();
     }
 
 
@@ -807,6 +812,20 @@ public class BillingSystemApplication extends Application implements BootstrapNo
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras)
     {
-        
+
+    }
+
+    public void initLocationManager()
+    {
+        _locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        try
+        {
+            _locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
+        }
+        catch (SecurityException e)
+        {
+
+        }
+
     }
 }

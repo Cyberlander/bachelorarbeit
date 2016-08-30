@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.DialogHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationDistanceHelper;
+import com.cyberlandgo.felix.bachelorarbeit20.Helper.StationGPSCoordinatesHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.Helper.TicketDetailHelper;
 import com.cyberlandgo.felix.bachelorarbeit20.R;
 import com.cyberlandgo.felix.bachelorarbeit20.application.Preferences;
@@ -85,7 +86,8 @@ public class FragmentOverview extends Fragment implements SharedPreferences.OnSh
 
 
 
-        Toast.makeText(getContext(),_gpsCoordinatesDatasource.getAllStationGPSCoordinates().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), StationGPSCoordinatesHelper.getCoordinatesForStation(getContext(),"Berliner Tor"),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), _gpsCoordinatesDatasource.getAllStationGPSCoordinates().get(0).getLongitude(),Toast.LENGTH_LONG).show();
         return view;
     }
 
