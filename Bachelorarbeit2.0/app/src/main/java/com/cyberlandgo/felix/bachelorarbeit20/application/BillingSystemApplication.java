@@ -9,9 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -52,7 +55,7 @@ import java.util.Map;
 /**
  * Created by Felix on 06.08.2016.
  */
-public class BillingSystemApplication extends Application implements BootstrapNotifier,SharedPreferences.OnSharedPreferenceChangeListener
+public class BillingSystemApplication extends Application implements BootstrapNotifier,SharedPreferences.OnSharedPreferenceChangeListener, LocationListener
 {
     Preferences preferences;
     int currentStatusStateMachine;
@@ -764,5 +767,46 @@ public class BillingSystemApplication extends Application implements BootstrapNo
         {
             showNotification("GPS wurde deaktivert!","Bitte wieder einschalten!");
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        Log.e("Current Lat:",""+location.getLatitude());
+        Log.e("Current Lon:",""+location.getLongitude());
+    }
+
+    @Override
+    public void onProviderEnabled(String provider)
+    {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider)
+    {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras)
+    {
+        
     }
 }
