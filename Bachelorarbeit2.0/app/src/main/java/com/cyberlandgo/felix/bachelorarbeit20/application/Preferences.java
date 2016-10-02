@@ -27,7 +27,7 @@ public class Preferences
     public static final String keyGPSUsage = "keyGPSUsage";
     public static final String keyCurrentGPSCoordinatesLatitude = "keyCurrentGPSCoordinatesLatitude";
     public static final String keyCurrentGPSCoordinatesLongitude = "keyCurrentGPSCoordinatesLongitude";
-
+    public static final String keyRangeUsage = "keyRangeUsage";
 
 
 
@@ -246,6 +246,18 @@ public class Preferences
     public static boolean getBooleanGPSUsage()
     {
         return readSharedSettingBoolean(mContext, keyGPSUsage);
+    }
+
+
+    //Boolean Ranging an/aus
+    public static void saveBooleanRangingUsage(boolean rangingStatus)
+    {
+        saveSharedSettingBoolean(mContext,keyRangeUsage,rangingStatus);
+    }
+
+    public static boolean getBooleanRangingUsage()
+    {
+        return readSharedSettingBoolean(mContext,keyRangeUsage);
     }
 
 

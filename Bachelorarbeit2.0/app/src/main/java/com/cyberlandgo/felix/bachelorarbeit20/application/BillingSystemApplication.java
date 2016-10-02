@@ -39,9 +39,12 @@ import com.cyberlandgo.felix.bachelorarbeit20.database.models.Station;
 import com.cyberlandgo.felix.bachelorarbeit20.database.models.StationGPSCoordinates;
 import com.cyberlandgo.felix.bachelorarbeit20.ui.MainActivity;
 
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
@@ -51,6 +54,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +62,7 @@ import java.util.Map;
 /**
  * Created by Felix on 06.08.2016.
  */
-public class BillingSystemApplication extends Application implements BootstrapNotifier,SharedPreferences.OnSharedPreferenceChangeListener, LocationListener
+public class BillingSystemApplication extends Application implements BootstrapNotifier,SharedPreferences.OnSharedPreferenceChangeListener, LocationListener, BeaconConsumer, RangeNotifier
 {
     Preferences preferences;
     int currentStatusStateMachine;
@@ -332,6 +336,16 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
 
+        //Ranging einschalten
+        try
+        {
+            beaconManager.startRangingBeaconsInRegion(region);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+
 
 
 
@@ -365,6 +379,16 @@ public class BillingSystemApplication extends Application implements BootstrapNo
             //setCountDownAfterLeavingBus();
         }
 
+        //Ranging abschalten
+        try
+        {
+            beaconManager.stopRangingBeaconsInRegion(region);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -390,6 +414,7 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
         //dem Beacon-Parser das Layout für iBeacons übergeben
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        beaconManager.bind(this);
 
         // setzen der Scan-Intervalle, hoch setzen, damit
         //schneller iBeacons erkannt werden
@@ -868,4 +893,32 @@ public class BillingSystemApplication extends Application implements BootstrapNo
 
 
     }
+
+
+
+
+    //Methoden für BeaconConsumer, RangeNotifier
+
+    @Override
+    public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region)
+    {
+        if (beacons.size()>0)
+        {
+            for (Beacon b : beacons)
+            {
+                if (b.getId1().toString().equals(Values.GLOBAL_UUID))
+                {
+                    Log.e("DISTANZ","" + b.getDistance());
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onBeaconServiceConnect()
+    {
+        beaconManager.setRangeNotifier(this);
+    }
+
+
 }

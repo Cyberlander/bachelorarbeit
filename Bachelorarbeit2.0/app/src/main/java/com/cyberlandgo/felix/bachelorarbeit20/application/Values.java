@@ -16,6 +16,10 @@ public final class Values
 
     public static final String LEER_STRING = "-";
 
+    //für das Ranging, sobald der Beacon weninger als
+    //drei Meter entfernt ist
+    public static final double activationDistance = 3.00;
+
 
     //Keys für die default Preferences (PrefActivity)
     public static final String BETWEEN_SCANS_FOREGROUND_KEY = "between_scans_foreground_key";
